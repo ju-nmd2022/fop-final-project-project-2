@@ -7,7 +7,7 @@ function scenery() {
   fill(192, 192, 192);
   // floor
   noStroke();
-  rect(0, 430, width, 110);
+  rect(0, 430, width, 200);
   // windows
   fill(0, 0, 0);
   rect(130, 140, 115, 75, 20);
