@@ -2,6 +2,7 @@ let windowX = 100;
 let windowY = 100;
 let windowW = 100;
 let windowH = 100;
+let movingForward = 5;
 
 function windows(windowX, windowY, windowW, windowH) {
   fill(0, 0, 0);
@@ -28,36 +29,42 @@ function scenery() {
 //function draw() {
 scenery();
 windows(windowX, windowY, windowW, windowH);
+//move winows to left, generate new windows?
+windowX = windowX - movingForward;
 //}
 
 //blue box
 fill(84, 196, 198);
+strokeWeight(4);
+stroke(99, 148, 147);
 rect(176, 376, windowW + 15, windowH - 10, 5);
 stroke(150, 150, 150);
 strokeWeight(2.5);
-line(177, 408, 199, 408);
+line(180, 408, 199, 408);
 line(199, 408, 216, 422);
-line(216, 422, 256, 422);
-line(256, 422, 273, 408);
-line(273, 408, 290, 408);
+line(216, 422, 250, 422);
+line(250, 422, 266, 408);
+line(266, 408, 287, 408);
 
 //wooden box
 fill(202, 164, 114);
-noStroke();
+strokeWeight(4);
+stroke(141, 114, 79);
 rect(400, 376, windowW + 15, windowH - 10, 5);
 fill(110, 110, 110);
 // nails
-ellipse(406, 395, 8, 8);
-ellipse(506, 395, 8, 8);
-ellipse(406, 415, 8, 8);
-ellipse(506, 415, 8, 8);
-ellipse(406, 435, 8, 8);
-ellipse(506, 435, 8, 8);
-ellipse(406, 455, 8, 8);
-ellipse(506, 455, 8, 8);
-stroke(128, 70, 27);
+noStroke();
+ellipse(407, 395, 8, 8);
+ellipse(507, 395, 8, 8);
+ellipse(407, 415, 8, 8);
+ellipse(507, 415, 8, 8);
+ellipse(407, 435, 8, 8);
+ellipse(507, 435, 8, 8);
+ellipse(407, 455, 8, 8);
+ellipse(507, 455, 8, 8);
+// wood lines
+stroke(106, 81, 50);
 strokeWeight(2.5);
-line(401, 466, 514, 466);
 line(401, 446, 514, 446);
 line(401, 426, 514, 426);
 line(401, 406, 514, 406);
