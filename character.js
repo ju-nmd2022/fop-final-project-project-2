@@ -1,4 +1,5 @@
 //https://editor.p5js.org/pajay.l/sketches/QNkv9FjXp following code adapted from this website
+
 var backPackX;
 var goggleX;
 var shineX;
@@ -10,87 +11,85 @@ var Rinvy = 41;
 var Linvy = 41;
 var bodyY = 65;
 
-function startBlinking() {
-  setInterval(function () {
-    blink();
-  }, 7000);
-}
-function blink() {
-  goggleY = goggleY - 25;
-  setTimeout(function () {
-    if (goggleY > goggleY - 24) {
-      goggleY = goggleY + 25;
-    }
-  }, 100);
-}
-startBlinking();
 function RstartWalking() {
   setInterval(function () {
-    walk();
-  }, 1000);
+    walk("right");
+  }, 13000);
 }
-function walk() {
-  Rlegy = Rlegy - 5;
-  Rinvy = Rinvy - 5;
-  setTimeout(function () {
-    if (Rlegy > Rlegy - 4) {
-      Rlegy = Rlegy + 5;
-      Rinvy = Rinvy + 5;
-    }
-  }, 500);
-}
-RstartWalking();
+
 function LstartWalking() {
   setInterval(function () {
-    Lwalk();
+    walk("left");
   }, 1000);
 }
-function Lwalk() {
-  Llegy = Llegy - 5;
-  Linvy = Linvy - 5;
-  setTimeout(function () {
-    if (Llegy > Llegy - 4) {
-      Llegy = Llegy + 5;
-      Linvy = Linvy + 5;
-    }
-  }, 500);
+
+function walk(direction) {
+  if (direction === "right") {
+    Rlegy = Rlegy - 5;
+    Rinvy = Rinvy - 5;
+    setTimeout(function () {
+      if (Rlegy > Rlegy - 4) {
+        Rlegy = Rlegy + 5;
+        Rinvy = Rinvy + 5;
+      }
+    }, 500);
+  } else if (direction === "left") {
+    Llegy = Llegy - 5;
+    Linvy = Linvy - 5;
+    setTimeout(function () {
+      if (Llegy > Llegy - 4) {
+        Llegy = Llegy + 5;
+        Linvy = Linvy + 5;
+      }
+    }, 500);
+  }
 }
+
 setTimeout(() => LstartWalking(), 500);
+
 class Mover {
   constructor(x, y) {
     this.pos = createVector(x, y);
-    this.vel = p5.Vector.random2D();
-    this.vel.mult(random(3));
+    this.vel = createVector(0, 0);
+    this.acc = createVector(0, 0);
+    this.jumpForce = createVector(0, -8);
+    this.isJumping = false;
+    this.gravity = createVector(0, 0.3);
   }
+
   update() {
-    let mouse = createVector(mouseX, mouseY);
-    this.acc = p5.Vector.sub(mouse, this.pos);
-    this.acc.setMag(9.1);
+    if (keyIsDown(32) && !this.isJumping) {
+      // if spacebar is pressed and not already jumping
+      this.vel.add(this.jumpForce); // add jump force to velocity
+      this.isJumping = true;
+    }
+    this.acc = this.gravity; // apply gravity
     this.vel.add(this.acc);
-    this.vel.limit(2);
+    this.vel.limit(90);
     this.pos.add(this.vel);
+
+    // reset isJumping flag when character touches the ground
+    if (this.pos.y >= height - 60) {
+      this.pos.y = height - 60;
+      this.vel.y = 0;
+      this.isJumping = false;
+    }
   }
+
   show() {
-    if (dist(mouseX, mouseY, this.pos.x, this.pos.y) > 1) {
-      if (mouseX > this.pos.x) {
-        backPackX = this.pos.x - 26;
-        goggleX = this.pos.x + 7;
-      } else {
-        backPackX = this.pos.x + 26;
-        goggleX = this.pos.x - 7;
-      }
+    if (keyIsPressed && key === "ArrowRight") {
+      backPackX = this.pos.x - 26;
+      goggleX = this.pos.x + 7;
+    } else if (keyIsPressed && key === "ArrowLeft") {
+      backPackX = this.pos.x + 26;
+      goggleX = this.pos.x - 7;
     }
-    if (dist(mouseX, mouseY, this.pos.x, this.pos.y) < 1) {
-      if (mouseX > this.pos.x) {
-        backPackX = this.pos.x - 26;
-        goggleX = this.pos.x + 7;
-      } else {
-        backPackX = this.pos.x + 26;
-        goggleX = this.pos.x - 7;
-      }
-    }
+
     fill(0);
     ellipse(this.pos.x, this.pos.y + 46, 60, 10);
+    strokeWeight(3);
+    fill(137, 207, 200);
+    ellipse(goggleX, this.pos.y - 5, 40, goggleY);
     strokeWeight(3);
     fill(c1, c2, c3);
     ellipse(backPackX, this.pos.y + 10, 10, 35);
@@ -103,6 +102,7 @@ class Mover {
     rect(this.pos.x + 6, this.pos.y, 17, Rinvy);
     rect(this.pos.x - 24, this.pos.y, 18, Linvy);
     stroke(0);
+
     fill(137, 207, 200);
     strokeWeight(3);
     ellipse(goggleX, this.pos.y - 5, 40, goggleY);
