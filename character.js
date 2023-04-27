@@ -5,8 +5,8 @@ var goggleX;
 var shineX;
 var shadowX;
 var goggleY = 25;
-var Rlegy = 45;
-var Llegy = 45;
+var Rightleg = 45;
+var Leftleg = 45;
 var Rinvy = 41;
 var Linvy = 41;
 var bodyY = 65;
@@ -14,7 +14,7 @@ var bodyY = 65;
 function RstartWalking() {
   setInterval(function () {
     walk("right");
-  }, 13000);
+  }, 1000);
 }
 
 function LstartWalking() {
@@ -25,64 +25,57 @@ function LstartWalking() {
 
 function walk(direction) {
   if (direction === "right") {
-    Rlegy = Rlegy - 5;
+    Rightleg = Rightleg - 5;
     Rinvy = Rinvy - 5;
     setTimeout(function () {
-      if (Rlegy > Rlegy - 4) {
-        Rlegy = Rlegy + 5;
+      if (Rightleg > Rightleg - 4) {
+        Rightleg = Rightleg + 5;
         Rinvy = Rinvy + 5;
       }
     }, 500);
   } else if (direction === "left") {
-    Llegy = Llegy - 5;
+    Leftleg = Leftleg - 5;
     Linvy = Linvy - 5;
     setTimeout(function () {
-      if (Llegy > Llegy - 4) {
-        Llegy = Llegy + 5;
+      if (Leftleg > Leftleg - 4) {
+        Leftleg = Leftleg + 5;
         Linvy = Linvy + 5;
       }
     }, 500);
   }
 }
 
-setTimeout(() => LstartWalking(), 500);
+setTimeout(() => LstartWalking(), 530);
+setTimeout(() => RstartWalking(), 100);
 
 class Mover {
   constructor(x, y) {
     this.pos = createVector(x, y);
-    this.vel = createVector(0, 0);
-    this.acc = createVector(0, 0);
-    this.jumpForce = createVector(0, -8);
-    this.isJumping = false;
-    this.gravity = createVector(0, 0.3);
+    this.vel = 2;
+    this.acc = 1;
   }
 
-  update() {
-    if (keyIsDown(32) && !this.isJumping) {
-      // if spacebar is pressed and not already jumping
-      this.vel.add(this.jumpForce); // add jump force to velocity
-      this.isJumping = true;
-    }
-    this.acc = this.gravity; // apply gravity
-    this.vel.add(this.acc);
-    this.vel.limit(90);
-    this.pos.add(this.vel);
-
-    // reset isJumping flag when character touches the ground
-    if (this.pos.y >= height - 60) {
-      this.pos.y = height - 60;
-      this.vel.y = 0;
-      this.isJumping = false;
-    }
-  }
-
-  show() {
+  Show() {
     if (keyIsPressed && key === "ArrowRight") {
+      this.pos.x -= -5;
       backPackX = this.pos.x - 26;
       goggleX = this.pos.x + 7;
     } else if (keyIsPressed && key === "ArrowLeft") {
+      this.pos.x -= 5;
       backPackX = this.pos.x + 26;
       goggleX = this.pos.x - 7;
+    }
+
+    // Uses spacebar to job
+    if (keyIsDown(32)) {
+      this.vel = -10;
+      this.pos.y = this.pos.y + this.vel;
+      // this.pos.y = this.pos.y + this.vel;
+    }
+    // Makes it stop at the bottom line which is y = 110
+    if (this.pos.y + 110 < innerHeight) {
+      this.pos.y = this.pos.y + this.vel;
+      this.vel = this.vel + this.acc;
     }
 
     fill(0);
@@ -91,11 +84,11 @@ class Mover {
     fill(137, 207, 200);
     ellipse(goggleX, this.pos.y - 5, 40, goggleY);
     strokeWeight(3);
-    fill(c1, c2, c3);
+    fill(2555, 255, 20);
     ellipse(backPackX, this.pos.y + 10, 10, 35);
     stroke(0);
-    rect(this.pos.x + 2, this.pos.y, 22, Rlegy);
-    rect(this.pos.x - 26, this.pos.y, 22, Llegy);
+    rect(this.pos.x + 2, this.pos.y, 22, Rightleg);
+    rect(this.pos.x - 26, this.pos.y, 22, Leftleg);
     strokeWeight(3);
     ellipse(this.pos.x, this.pos.y, 50, bodyY);
     strokeWeight(0);
@@ -108,23 +101,13 @@ class Mover {
     ellipse(goggleX, this.pos.y - 5, 40, goggleY);
   }
 }
-var mover;
-var ob1, ob2, ob3, ob4, ob5;
-
+let mover;
 function setup() {
   createCanvas(440, 440);
   mover = new Mover(200, 200);
-  var mouse = createVector(mouseX, mouseY);
-  c1 = color((0, 255), (0, 255), random(0, 255));
-  c2 = color((0, 255), random(0, 255), random(0, 255));
-  c3 = color(random(0, 255), random(0, 255), (0, 255));
 }
 
 function draw() {
   background(125);
-  mover.update();
-  mover.update();
-  mover.show();
-
-  // drawSprites();
+  mover.Show();
 }
