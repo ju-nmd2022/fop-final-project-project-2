@@ -10,7 +10,7 @@ function windows(windowX, windowY, windowW, windowH) {
   rect(windowX + 30, windowY + 40, windowW + 15, windowH - 25, 20);
   rect(windowX + 330, windowY + 40, windowW + 15, windowH - 25, 20);
 
-  if ((windowX < 130 && windowX > 10) || (windowX < 10 && windowX > 50)) {
+  if (windowX < 122 && windowX > 10) {
     //pluto
     fill(200, 200, 200);
     ellipse(157, 169, 25, 25);
