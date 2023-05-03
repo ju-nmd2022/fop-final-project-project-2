@@ -66,7 +66,7 @@ class Mover {
       goggleX = this.pos.x - 7;
     }
 
-    // Uses spacebar to job
+    // Uses spacebar to jump
     if (keyIsDown(32)) {
       this.vel = -10;
       this.pos.y = this.pos.y + this.vel;
