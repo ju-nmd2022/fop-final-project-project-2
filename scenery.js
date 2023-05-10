@@ -35,7 +35,7 @@ function scenery() {
   fill(192, 192, 192);
   // floor
   noStroke();
-  rect(0, 430, width, 200);
+  rect(0, 430, 600, 200);
 }
 
 function blueBox(boxX, boxY, boxW, boxH) {
@@ -106,7 +106,7 @@ function draw() {
   windows(windowX + 300, windowY, windowW, windowH);
 
   // move windows to the left
-  windowX = windowX - moveToLeft;
+  //windowX = windowX - moveToLeft;
   // if the window is out of the screen
   if (windowX + windowW + gap < -320) {
     // generate new windows from the right
@@ -119,7 +119,7 @@ function draw() {
   woodenBox(boxX, boxY, boxW, boxH);
 
   // move boxes to left
-  boxX = boxX - moveToLeft2;
+  //boxX = boxX - moveToLeft2;
   // if the window is out of the screen
   if (boxX + boxW + gap < -320) {
     // generate new windows from the right
