@@ -1,3 +1,9 @@
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  frameRate(30);
+  mover = new Mover(200, 200);
+}
+
 let windowX = 100;
 let windowY = 100;
 let windowW = 100;
@@ -7,7 +13,7 @@ let moveToLeft2 = 10;
 let gap = 30;
 
 let boxX = 100;
-let boxY = 100;
+let boxY = 200;
 let boxW = 100;
 let boxH = 100;
 
@@ -35,7 +41,7 @@ function scenery() {
   fill(192, 192, 192);
   // floor
   noStroke();
-  rect(0, 430, 600, 200);
+  rect(0, 530, width, 400);
 }
 
 function blueBox(boxX, boxY, boxW, boxH) {
@@ -100,51 +106,174 @@ function fuel(fuelX, fuelY) {
   ellipse(fuelX + 2, fuelY + 2, 7, 5);
 }
 
+function generateRandomBoxType() {
+  // Generate a random number (0 or 1) to determine the box type
+  return floor(random(2));
+}
+
+let boxes = []; // Array to store the generated boxes
+
+function generateNewBox() {
+  let newBoxType = generateRandomBoxType();
+  let newBoxX = width + gap; // Initial X position of the new box
+  let newBoxY = boxY; // Same Y position as the existing boxes
+
+  boxes.push({
+    type: newBoxType,
+    x: newBoxX,
+    y: newBoxY,
+  });
+}
+
+function drawBoxes() {
+  for (let i = boxes.length - 1; i >= 0; i--) {
+    let currentBox = boxes[i];
+
+    if (currentBox.type === 0) {
+      blueBox(currentBox.x, currentBox.y, boxW, boxH);
+    } else {
+      woodenBox(currentBox.x, currentBox.y, boxW, boxH);
+    }
+
+    currentBox.x -= moveToLeft2;
+
+    if (currentBox.x + boxW + gap < -320) {
+      boxes.splice(i, 1); // Remove the box from the array if it's out of the screen
+    }
+  }
+}
+
+//https://editor.p5js.org/pajay.l/sketches/QNkv9FjXp following code adapted from this website
+
+var backPackX;
+var goggleX;
+var shineX;
+var shadowX;
+var goggleY = 25;
+var Rightleg = 45;
+var Leftleg = 45;
+var Rinvy = 41;
+var Linvy = 41;
+var bodyY = 65;
+
+function RstartWalking() {
+  setInterval(function () {
+    walk("right");
+  }, 1000);
+}
+
+function LstartWalking() {
+  setInterval(function () {
+    walk("left");
+  }, 1000);
+}
+
+function walk(direction) {
+  if (direction === "right") {
+    Rightleg = Rightleg - 5;
+    Rinvy = Rinvy - 5;
+    setTimeout(function () {
+      if (Rightleg > Rightleg - 4) {
+        Rightleg = Rightleg + 5;
+        Rinvy = Rinvy + 5;
+      }
+    }, 500);
+  } else if (direction === "left") {
+    Leftleg = Leftleg - 5;
+    Linvy = Linvy - 5;
+    setTimeout(function () {
+      if (Leftleg > Leftleg - 4) {
+        Leftleg = Leftleg + 5;
+        Linvy = Linvy + 5;
+      }
+    }, 500);
+  }
+}
+
+setTimeout(() => LstartWalking(), 530);
+setTimeout(() => RstartWalking(), 100);
+
+class Mover {
+  constructor(x, y) {
+    this.pos = createVector(x, y);
+    this.vel = 2;
+    this.acc = 1;
+  }
+
+  Show() {
+    if (keyIsPressed && key === "ArrowRight") {
+      this.pos.x -= -5;
+      backPackX = this.pos.x - 26;
+      goggleX = this.pos.x + 7;
+    } else if (keyIsPressed && key === "ArrowLeft") {
+      this.pos.x -= 5;
+      backPackX = this.pos.x + 26;
+      goggleX = this.pos.x - 7;
+    }
+
+    // Uses spacebar to jump
+    if (keyIsDown(32)) {
+      this.vel = -10;
+      this.pos.y = this.pos.y + this.vel;
+      // this.pos.y = this.pos.y + this.vel;
+    }
+    // Makes it stop at the bottom line which is y = 110
+    if (this.pos.y + 110 < innerHeight) {
+      this.pos.y = this.pos.y + this.vel;
+      this.vel = this.vel + this.acc;
+    }
+
+    fill(0);
+    ellipse(this.pos.x, this.pos.y + 46, 60, 10);
+    strokeWeight(3);
+    fill(137, 207, 200);
+    ellipse(goggleX, this.pos.y - 5, 40, goggleY);
+    strokeWeight(3);
+    fill(2555, 255, 20);
+    ellipse(backPackX, this.pos.y + 10, 10, 35);
+    stroke(0);
+    rect(this.pos.x + 2, this.pos.y, 22, Rightleg);
+    rect(this.pos.x - 26, this.pos.y, 22, Leftleg);
+    strokeWeight(3);
+    ellipse(this.pos.x, this.pos.y, 50, bodyY);
+    strokeWeight(0);
+    rect(this.pos.x + 6, this.pos.y, 17, Rinvy);
+    rect(this.pos.x - 24, this.pos.y, 18, Linvy);
+    stroke(0);
+
+    fill(137, 207, 200);
+    strokeWeight(3);
+    ellipse(goggleX, this.pos.y - 5, 40, goggleY);
+  }
+}
+
 function draw() {
   scenery();
   windows(windowX, windowY, windowW, windowH);
   windows(windowX + 300, windowY, windowW, windowH);
 
-  // move windows to the left
-  //windowX = windowX - moveToLeft;
-  // if the window is out of the screen
+  // Move windows to the left
+  windowX -= moveToLeft;
   if (windowX + windowW + gap < -320) {
-    // generate new windows from the right
-    for (let i = 0; i < 1; i++) {
-      windowX = width + gap * (i + 1);
-    }
+    windowX = width + gap;
   }
+
+  fuel(fuelX, fuelY);
+
+  // Generate new box if necessary
+  if (frameCount % 100 === 0) {
+    generateNewBox();
+  }
+
+  drawBoxes();
 
   blueBox(boxX, boxY, boxW, boxH);
   woodenBox(boxX, boxY, boxW, boxH);
 
-  // move boxes to left
-  //boxX = boxX - moveToLeft2;
-  // if the window is out of the screen
+  // Move boxes to the left
+  boxX -= moveToLeft2;
   if (boxX + boxW + gap < -320) {
-    // generate new windows from the right
-    for (let i = 0; i < 1; i++) {
-      boxX = width + gap * (i + 1);
-    }
-  }
-
-  fuel(fuelX, fuelY);
-}
-
-// moving windows to left code without for loop
-/*   move windows to left
-  windowX = windowX - moveToLeft;
-  // if windows are out of the screen
-  if (windowX + windowW + gap < -320) {
-    // generate new windows from the right
-    windowX = width + gap;
-  } */
-
-// moving boxes to left code without loop
-/*  // move boxes to left
-  boxX = boxX - moveToLeft;
-  // if boxes are out of the screen
-  if (boxX + boxW + gap < -320) {
-    // generate new boxes from the right
     boxX = width + gap;
-  }*/
+  }
+  mover.Show();
+}
