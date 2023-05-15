@@ -48,7 +48,12 @@ function walk(direction) {
 setTimeout(() => LstartWalking(), 530);
 setTimeout(() => RstartWalking(), 100);
 
-
+class Mover {
+  constructor(x, y) {
+    this.pos = createVector(x, y);
+    this.vel = 2;
+    this.acc = 1;
+  }
 
   Show() {
     if (keyIsPressed && key === "ArrowRight") {
@@ -95,7 +100,7 @@ setTimeout(() => RstartWalking(), 100);
     strokeWeight(3);
     ellipse(goggleX, this.pos.y - 5, 40, goggleY);
   }
-
+}
 let mover;
 function setup() {
   createCanvas(440, 440);
