@@ -1,9 +1,8 @@
+// among us character
 //https://editor.p5js.org/pajay.l/sketches/QNkv9FjXp following code adapted from this website
-
 var backPackX;
 var goggleX;
 var shineX;
-var shadowX;
 var goggleY = 25;
 var Rightleg = 45;
 var Leftleg = 45;
@@ -72,14 +71,13 @@ class Mover {
       this.pos.y = this.pos.y + this.vel;
       // this.pos.y = this.pos.y + this.vel;
     }
-    // Makes it stop at the bottom line which is y = 110
-    if (this.pos.y + 110 < innerHeight) {
+    // Makes it stop at the bottom line
+    if (this.pos.y + 300 < innerHeight) {
       this.pos.y = this.pos.y + this.vel;
       this.vel = this.vel + this.acc;
     }
 
     fill(0);
-    ellipse(this.pos.x, this.pos.y + 46, 60, 10);
     strokeWeight(3);
     fill(137, 207, 200);
     ellipse(goggleX, this.pos.y - 5, 40, goggleY);
@@ -101,13 +99,4 @@ class Mover {
     ellipse(goggleX, this.pos.y - 5, 40, goggleY);
   }
 }
-let mover;
-function setup() {
-  createCanvas(440, 440);
-  mover = new Mover(200, 200);
-}
-
-function draw() {
-  background(125);
-  mover.Show();
-}
+// end of among us character
