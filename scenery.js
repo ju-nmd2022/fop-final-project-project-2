@@ -20,6 +20,7 @@ let boxH = 100;
 let fuelX = 321;
 let fuelY = 312;
 
+// function for windows
 function windows(windowX, windowY, windowW, windowH) {
   fill(0, 0, 0);
   rect(windowX + 30, windowY + 40, windowW + 15, windowH - 25, 20);
@@ -36,6 +37,7 @@ function windows(windowX, windowY, windowW, windowH) {
   }
 }
 
+// function for background
 function scenery() {
   background(110, 127, 128);
   fill(192, 192, 192);
@@ -44,6 +46,7 @@ function scenery() {
   rect(0, 530, width, 400);
 }
 
+// function for blue box
 function blueBox(boxX, boxY, boxW, boxH) {
   //blue box
   fill(84, 196, 198);
@@ -59,6 +62,7 @@ function blueBox(boxX, boxY, boxW, boxH) {
   line(boxX + 166, boxY + 308, boxX + 187, boxY + 308);
 }
 
+// function for wooden box
 function woodenBox(boxX, boxY, boxW, boxH) {
   //wooden box
   fill(202, 164, 114);
@@ -85,6 +89,46 @@ function woodenBox(boxX, boxY, boxW, boxH) {
   line(boxX + 301, boxY + 286, boxX + 414, boxY + 286);
 }
 
+// function to generate a random box type (either blue or wood)
+function generateRandomBoxType() {
+  // Generate a random number (0 or 1) to determine the box type
+  return floor(random(2));
+}
+
+// function to generate new boxes in random orders
+let boxes = [];
+function generateNewBox() {
+  let newBoxType = generateRandomBoxType();
+  let newBoxX = width + gap; // Initial X position of the new box
+  let newBoxY = boxY; // Same Y position as the existing boxes
+
+  boxes.push({
+    type: newBoxType,
+    x: newBoxX,
+    y: newBoxY,
+  });
+}
+
+// function to display new boxes on the canvas
+function drawBoxes() {
+  for (let i = boxes.length - 1; i >= 0; i--) {
+    let currentBox = boxes[i];
+
+    if (currentBox.type === 0) {
+      blueBox(currentBox.x, currentBox.y, boxW, boxH);
+    } else {
+      woodenBox(currentBox.x, currentBox.y, boxW, boxH);
+    }
+
+    currentBox.x -= moveToLeft2;
+
+    if (currentBox.x + boxW + gap < -320) {
+      boxes.splice(i, 1); // Remove the box from the array if it's out of the screen
+    }
+  }
+}
+
+// function for fuel
 function fuel(fuelX, fuelY) {
   fill(255, 0, 0);
   noStroke();
@@ -106,48 +150,35 @@ function fuel(fuelX, fuelY) {
   ellipse(fuelX + 2, fuelY + 2, 7, 5);
 }
 
-// randomly generating new boxes
-function generateRandomBoxType() {
-  // Generate a random number (0 or 1) to determine the box type
-  return floor(random(2));
-}
+// function to generate new fuels at random y positions
+let fuels = [];
+function generateNewFuel() {
+  let newFuelX = width + gap; // Initial X position of the new fuel
+  let newFuelY = random(200, height - 200); // Random Y position within a desired range
 
-let boxes = []; // Array to store the generated boxes
-
-function generateNewBox() {
-  let newBoxType = generateRandomBoxType();
-  let newBoxX = width + gap; // Initial X position of the new box
-  let newBoxY = boxY; // Same Y position as the existing boxes
-
-  boxes.push({
-    type: newBoxType,
-    x: newBoxX,
-    y: newBoxY,
+  fuels.push({
+    x: newFuelX,
+    y: newFuelY,
   });
 }
 
-function drawBoxes() {
-  for (let i = boxes.length - 1; i >= 0; i--) {
-    let currentBox = boxes[i];
+// function to display new fuels on the canvas
+function drawFuels() {
+  for (let i = fuels.length - 1; i >= 0; i--) {
+    let currentFuel = fuels[i];
 
-    if (currentBox.type === 0) {
-      blueBox(currentBox.x, currentBox.y, boxW, boxH);
-    } else {
-      woodenBox(currentBox.x, currentBox.y, boxW, boxH);
-    }
+    fuel(currentFuel.x, currentFuel.y);
 
-    currentBox.x -= moveToLeft2;
+    currentFuel.x -= moveToLeft2;
 
-    if (currentBox.x + boxW + gap < -320) {
-      boxes.splice(i, 1); // Remove the box from the array if it's out of the screen
+    if (currentFuel.x + 40 + gap < -320) {
+      fuels.splice(i, 1); // Remove the fuel from the array if it's out of the screen
     }
   }
 }
 
 // among us character
-
 //https://editor.p5js.org/pajay.l/sketches/QNkv9FjXp following code adapted from this website
-
 var backPackX;
 var goggleX;
 var shineX;
@@ -247,6 +278,7 @@ class Mover {
     ellipse(goggleX, this.pos.y - 5, 40, goggleY);
   }
 }
+// end of among us character
 
 function draw() {
   scenery();
@@ -259,15 +291,6 @@ function draw() {
     windowX = width + gap;
   }
 
-  fuel(fuelX, fuelY);
-
-  // Generate new box if necessary
-  if (frameCount % 100 === 0) {
-    generateNewBox();
-  }
-
-  drawBoxes();
-
   blueBox(boxX, boxY, boxW, boxH);
   woodenBox(boxX, boxY, boxW, boxH);
 
@@ -276,5 +299,29 @@ function draw() {
   if (boxX + boxW + gap < -320) {
     boxX = width + gap;
   }
+
+  // frequency of new boxes
+  if (frameCount % 100 === 0) {
+    generateNewBox();
+  }
+
+  drawBoxes();
+
+  fuel(fuelX, fuelY);
+
+  // move fuels to the left
+  fuelX -= moveToLeft2;
+  if (fuelX + 40 + gap < -320) {
+    fuelX = width + gap;
+  }
+
+  // frequency of new fuel
+  if (frameCount % 200 === 0) {
+    generateNewFuel();
+  }
+
+  drawFuels();
+
+  // display among us character
   mover.Show();
 }
