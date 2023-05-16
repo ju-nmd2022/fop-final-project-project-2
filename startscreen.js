@@ -4,7 +4,7 @@ let gameState = "start";
 let state = "start";
 
 function setup() {
-  createCanvas(1600, 1200);
+  createCanvas(windowWidth, windowHeight);
   frameRate(56);
 }
 
@@ -13,10 +13,13 @@ function preload() {
 }
 
 function StartGame() {
-  fill(255, 255, 255);
-  textSize(20);
-  textFont("times new roman");
   image(img, -100, -100, width, height);
+  fill(254, 227, 132);
+  textSize(90);
+  textFont("times new roman");
+  text("Are YOU Ready For A New Adventure?",230,950);
+  
+  
 }
 // //win, The following code was conducted from here: https://p5js.org/examples/image-load-and-display-image.html
 // function WinWin() {
