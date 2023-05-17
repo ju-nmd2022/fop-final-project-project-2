@@ -32,7 +32,7 @@ function drawStart() {
   // Create a button element if it doesn't exist
   if (!button) {
     button = createButton("Start!");
-    button.position(1100, 800);
+    button.position(1000, 550);
     button.mousePressed(handleClick);
     button.addClass("custom-button");
   }
@@ -45,7 +45,7 @@ function drawStart() {
 
 function drawStartTwo() {
   background(0);
-  image(img, 0, 50, 1050, 550);
+  image(img, 0, 50, 1000, 575);
   fill(210, 43, 43);
   textSize(150);
   textFont("Darumadrop One");
@@ -55,11 +55,7 @@ function drawStartTwo() {
   stroke(0, 0, 0);
   fill(255, 255, 255);
   strokeWeight(4);
-  text(
-    "NMD is stuck on the wrong spaceship full of impostors.",
-    390,
-    420
-  );
+  text("NMD is stuck on the wrong spaceship full of impostors.", 390, 420);
   text(
     "Help NMD escape by collecting fuel and fly away in the JTH spaceship!",
     450,
@@ -70,16 +66,12 @@ function drawStartTwo() {
     520,
     475
   );
-  text(
-    "GO!",
-    825,
-    540
-  );
+  text("GO!", 825, 540);
 
   // Create button2 if it doesn't exist
   if (!button2) {
     button2 = createButton("");
-    button2.position(1100, 800);
+    button2.position(965, 575);
     button2.addClass("button2");
 
     button2.mouseOver(changeButtonContent);
@@ -101,15 +93,10 @@ function handleClick() {
 
 // Function to change button2 content on mouse over
 function changeButtonContent() {
-  button2.html(
-    '<i class="material-icons-outlined">rocket_launch</i>'
-   
-  );
+  button2.html('<i class="material-icons-outlined">rocket_launch</i>');
 }
 
 // Function to reset button2 content on mouse out
 function resetButtonContent() {
-  button2.html(
-    '<i class="material-icons-outlined">rocket</i>'
-  );
+  button2.html('<i class="material-icons-outlined">rocket</i>');
 }
