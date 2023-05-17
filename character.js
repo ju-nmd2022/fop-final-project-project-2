@@ -81,9 +81,10 @@ class Mover {
     strokeWeight(3);
     fill(137, 207, 200);
     ellipse(goggleX, this.pos.y - 5, 40, goggleY);
-    strokeWeight(3);
-    fill(2555, 255, 20);
+    fill(255, 255, 20);
+    stroke(0);
     ellipse(backPackX, this.pos.y + 10, 10, 35);
+    strokeWeight(3);
     stroke(0);
     rect(this.pos.x + 2, this.pos.y, 22, Rightleg);
     rect(this.pos.x - 26, this.pos.y, 22, Leftleg);
