@@ -71,11 +71,21 @@ class Mover {
       this.pos.y = this.pos.y + this.vel;
       // this.pos.y = this.pos.y + this.vel;
     }
-    // Makes it stop at the bottom line
-    if (this.pos.y + 300 < innerHeight) {
+
+    // makes the character stop at the floor
+    if (this.pos.y > 550) {
+      this.pos.y = 550;
+      this.vel = 0;
+    } else {
       this.pos.y = this.pos.y + this.vel;
       this.vel = this.vel + this.acc;
     }
+
+    /*    // Makes it stop at the bottom line
+    if (this.pos.y + 300 < innerHeight) {
+      this.pos.y = this.pos.y + this.vel;
+      this.vel = this.vel + this.acc;
+    }*/
 
     fill(0);
     strokeWeight(3);

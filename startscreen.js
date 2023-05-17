@@ -4,7 +4,7 @@ let state = "start";
 let button;
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(1000, 650);
   frameRate(56);
 
   img = loadImage("./Spacebak.png");
