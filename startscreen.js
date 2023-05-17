@@ -2,6 +2,7 @@ let isGameActive = true;
 let img;
 let state = "start";
 let button;
+let button2;
 
 function setup() {
   createCanvas(1000, 650);
@@ -9,16 +10,6 @@ function setup() {
 
   img = loadImage("./Spacebak.png");
   img2 = loadImage("./space.jpg");
-
-  // Create a button element
-  button = createButton("Start!");
-  // Set the position of the button
-  button.position(1100, 800);
-  // Add a callback function to handle button click event
-  button.mousePressed(handleClick);
-
-  // Add a CSS class to the button
-  button.addClass("custom-button");
 }
 
 function draw() {
@@ -37,7 +28,19 @@ function drawStart() {
   textFont("Darumadrop One");
   textAlign(CENTER, CENTER); // Center align the text
   text("Are YOU Ready For A New Adventure?", 500, 120);
-  console.log("start");
+
+  // Create a button element if it doesn't exist
+  if (!button) {
+    button = createButton("Start!");
+    button.position(1100, 800);
+    button.mousePressed(handleClick);
+    button.addClass("custom-button");
+  }
+
+  // Hide button2 if it exists
+  if (button2) {
+    button2.hide();
+  }
 }
 
 function drawStartTwo() {
@@ -52,7 +55,11 @@ function drawStartTwo() {
   stroke(0, 0, 0);
   fill(255, 255, 255);
   strokeWeight(4);
-  text("NMD is stuck on the wrong spaceship full of impostors.", 390, 420);
+  text(
+    "NMD is stuck on the wrong spaceship full of impostors.",
+    390,
+    420
+  );
   text(
     "Help NMD escape by collecting fuel and fly away in the JTH spaceship!",
     450,
@@ -63,7 +70,26 @@ function drawStartTwo() {
     520,
     475
   );
-  button.hide();
+  text(
+    "GO!",
+    825,
+    540
+  );
+
+  // Create button2 if it doesn't exist
+  if (!button2) {
+    button2 = createButton("");
+    button2.position(1100, 800);
+    button2.addClass("button2");
+
+    button2.mouseOver(changeButtonContent);
+    button2.mouseOut(resetButtonContent);
+  }
+
+  // Hide button1 if it exists
+  if (button) {
+    button.hide();
+  }
 }
 
 // Function to handle button click event
@@ -71,4 +97,19 @@ function handleClick() {
   if (state === "start") {
     state = "secondStart";
   }
+}
+
+// Function to change button2 content on mouse over
+function changeButtonContent() {
+  button2.html(
+    '<i class="material-icons-outlined">rocket_launch</i>'
+   
+  );
+}
+
+// Function to reset button2 content on mouse out
+function resetButtonContent() {
+  button2.html(
+    '<i class="material-icons-outlined">rocket</i>'
+  );
 }

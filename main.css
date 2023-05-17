@@ -28,3 +28,30 @@ body {
   background-color: #430505;
   transform: scale(0.95);
 }
+
+
+.button2 {
+  background-color: #D22B2B;
+  color:  #e6d4d4;
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: none;
+  margin-top: 21px;
+  margin-left: 130px;
+  width: 40px;
+  height: 40px;
+  font-size: 48px;
+  transform: scale(1.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-variation-settings:
+  'FILL' 10,
+  'wght' 300,
+  'GRAD' 200,
+  'opsz' 48
+}
+
+.button2:hover {
+  cursor: pointer;
+}
