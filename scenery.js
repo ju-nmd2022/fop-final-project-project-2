@@ -90,13 +90,15 @@ function drawFuels() {
 
     currentFuel.x -= moveToLeft2;
 
-    if (currentFuel.x + 40 + gap < -320) {
+    /* if (currentFuel.x + 40 + gap < 0) {
       fuels.splice(i, 1); // Remove the fuel from the array if it's out of the screen
-    }
+    } */
   }
 }
 
 //placeholder for among us character code
+
+let fuelCounter = 0;
 
 function draw() {
   scenery();
@@ -142,4 +144,38 @@ function draw() {
 
   // display among us character
   mover.Show();
+
+  // code for collecting fuel
+  for (let i = 0; i < fuels.length; i++) {
+    let currentFuel = fuels[i];
+
+    // character's dimensions
+    let characterLeft = mover.pos.x - 25;
+    let characterRight = mover.pos.x + 25;
+    let characterTop = mover.pos.y - 75;
+    let characterBottom = mover.pos.y + 75;
+
+    // fuel's dimensions
+    let fuelLeft = currentFuel.x;
+    let fuelRight = currentFuel.x + 40;
+    let fuelTop = currentFuel.y;
+    let fuelBottom = currentFuel.y + 40;
+
+    // check for collision
+    if (
+      characterLeft < fuelRight &&
+      characterRight > fuelLeft &&
+      characterTop < fuelBottom &&
+      characterBottom > fuelTop
+    ) {
+      // if they collide, increase the counter and remove the fuel
+      fuelCounter++;
+      fuels.splice(i, 1);
+    }
+  }
+
+  fill(255);
+  textSize(20);
+  textAlign(RIGHT, TOP);
+  text("Fuel Counter: " + fuelCounter, width - 10, 10);
 }
