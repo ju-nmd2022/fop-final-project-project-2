@@ -8,7 +8,7 @@ let windowX = 100;
 let windowY = 100;
 let windowW = 100;
 let windowH = 100;
-let moveToLeft = 5;
+let moveToLeft = 7;
 let moveToLeft2 = 10;
 let gap = 30;
 
@@ -127,16 +127,20 @@ function draw() {
 
   drawBoxes();
 
-  fuel(fuelX, fuelY);
+  for (let i = fuels.length - 1; i >= 0; i--) {
+    let currentFuel = fuels[i];
 
-  // move fuels to the left
-  fuelX -= moveToLeft2;
-  if (fuelX + 40 + gap < -320) {
-    fuelX = width + gap;
+    fuel(currentFuel.x, currentFuel.y);
+
+    // currentFuel.x -= moveToLeft2;
+
+    if (currentFuel.x + 40 + gap < 0) {
+      fuels.splice(i, 1); // Remove the fuel from the array if it's out of the screen
+    }
   }
 
   // frequency of new fuel
-  if (frameCount % 200 === 0) {
+  if (frameCount % 80 === 0) {
     generateNewFuel();
   }
 
