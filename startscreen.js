@@ -1,4 +1,3 @@
-let isGameActive = true;
 let img;
 let state = "start";
 let button;
@@ -12,11 +11,14 @@ function setup() {
   img2 = loadImage("./space.jpg");
 }
 
+state = "start";
+
 function draw() {
   if (state === "start") {
     drawStart();
   } else if (state === "secondStart") {
     drawStartTwo();
+  } else if (state === "gameScreen") {
   }
 }
 
@@ -44,6 +46,10 @@ function drawStart() {
 }
 
 function drawStartTwo() {
+  if (state === "gameScreen") {
+    loadGameScreen();
+    return; // Exit the function to prevent further drawing
+  }
   background(0);
   image(img, 0, 50, 1000, 575);
   fill(210, 43, 43);
@@ -76,6 +82,7 @@ function drawStartTwo() {
 
     button2.mouseOver(changeButtonContent);
     button2.mouseOut(resetButtonContent);
+    button2.mousePressed(handleClickButton2); // Add the event handler
   }
 
   // Hide button1 if it exists
@@ -90,6 +97,19 @@ function handleClick() {
     state = "secondStart";
   }
 }
+
+function handleClickButton2() {
+  if (state === "secondStart") {
+    state = "gameScreen";
+    loadGameScreen();
+  }
+}
+
+/*function loadGameScreen() {
+  const gameFrame = document.getElementById("gameFrame");
+  gameFrame.src = "gameScreen.html";
+  gameFrame.style.display = "block";
+}*/
 
 // Function to change button2 content on mouse over
 function changeButtonContent() {
