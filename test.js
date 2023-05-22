@@ -36,6 +36,149 @@ let fuelCounter = 0;
 
 let fuels = [];
 
+function draw() {
+  if (state === "start") {
+    drawStart();
+  } else if (state === "secondStart") {
+    drawStartTwo();
+  } else if (state === "gameScreen") {
+    gameScreen1();
+  }
+}
+
+function gameScreen1() {
+  scenery();
+  windows(windowX, windowY, windowW, windowH);
+  windows(windowX + 300, windowY, windowW, windowH);
+
+  windowX -= moveToLeft;
+  if (windowX + windowW + gap < -320) {
+    windowX = width + gap;
+  }
+
+  blueBox(boxX, boxY, boxW, boxH);
+  woodenBox(boxX, boxY, boxW, boxH);
+
+  boxX -= moveToLeft2;
+  if (boxX + boxW + gap < -320) {
+    boxX = width + gap;
+  }
+
+  if (frameCount % 100 === 0) {
+    generateNewBox();
+  }
+
+  drawBoxes();
+
+  for (let i = fuels.length - 1; i >= 0; i--) {
+    let currentFuel = fuels[i];
+
+    fuel(currentFuel.x, currentFuel.y);
+
+    if (currentFuel.x + 40 + gap < 0) {
+      fuels.splice(i, 1);
+    }
+  }
+
+  if (frameCount % 80 === 0) {
+    generateNewFuel();
+  }
+
+  drawFuels();
+
+  mover.Show();
+
+  for (let i = 0; i < fuels.length; i++) {
+    let currentFuel = fuels[i];
+
+    let characterLeft = mover.pos.x - 25;
+    let characterRight = mover.pos.x + 25;
+    let characterTop = mover.pos.y - 75;
+    let characterBottom = mover.pos.y + 75;
+
+    let fuelLeft = currentFuel.x;
+    let fuelRight = currentFuel.x + 40;
+    let fuelTop = currentFuel.y;
+    let fuelBottom = currentFuel.y + 40;
+
+    if (
+      characterLeft < fuelRight &&
+      characterRight > fuelLeft &&
+      characterTop < fuelBottom &&
+      characterBottom > fuelTop
+    ) {
+      fuelCounter++;
+      fuels.splice(i, 1);
+    }
+  }
+
+  fill(255);
+  textSize(20);
+  textAlign(RIGHT, TOP);
+  text("Fuel Counter: " + fuelCounter, width - 10, 10);
+}
+
+function drawStart() {
+  background(0);
+  image(img2, 1, 1, 1000, 750);
+  fill(254, 227, 132);
+  textSize(50);
+  textFont("Darumadrop One");
+  textAlign(CENTER, CENTER);
+  text("Are YOU Ready For A New Adventure?", 500, 120);
+
+  if (!button) {
+    button = createButton("Start!");
+    button.position(1000, 550);
+    button.mousePressed(handleClick);
+    button.addClass("custom-button");
+  }
+
+  if (button2) {
+    button2.hide();
+  }
+}
+
+function drawStartTwo() {
+  background(0);
+  image(img, 0, 50, 1000, 575);
+  fill(210, 43, 43);
+  textSize(150);
+  textFont("Darumadrop One");
+  text("URGENT!", 380, 190);
+  textSize(23);
+  textFont("Darumadrop One");
+  stroke(0, 0, 0);
+  fill(255, 255, 255);
+  strokeWeight(4);
+  text("NMD is stuck on the wrong spaceship full of impostors.", 390, 420);
+  text(
+    "Help NMD escape by collecting fuel and fly away in the JTH spaceship!",
+    450,
+    450
+  );
+  text(
+    "But be careful, the impostors are chasing you, and if you touch the boxes, they'll catch you!",
+    520,
+    475
+  );
+  text("GO!", 825, 540);
+
+  if (!button2) {
+    button2 = createButton("");
+    button2.position(900, 575);
+    button2.addClass("button2");
+
+    button2.mouseOver(changeButtonContent);
+    button2.mouseOut(resetButtonContent);
+    button2.mousePressed(handleClickButton2);
+  }
+
+  if (button) {
+    button.hide();
+  }
+}
+
 function scenery() {
   background(110, 127, 128);
   fill(192, 192, 192);
@@ -113,8 +256,6 @@ function fuel(fuelX, fuelY) {
   ellipse(fuelX + 2, fuelY + 2, 7, 5);
 }
 
-state = "start";
-
 // Function to handle button click event
 function handleClick() {
   if (state === "start") {
@@ -125,6 +266,7 @@ function handleClick() {
 function handleClickButton2() {
   if (state === "secondStart") {
     state = "gameScreen";
+    gameScreen1();
   }
 }
 
@@ -136,143 +278,4 @@ function changeButtonContent() {
 // Function to reset button2 content on mouse out
 function resetButtonContent() {
   button2.html('<i class="material-icons-outlined">rocket</i>');
-}
-
-function draw() {
-  if (state === "start") {
-    drawStart();
-  } else if (state === "secondStart") {
-    drawStartTwo();
-  } else if (state === "gameScreen") {
-    scenery();
-    windows(windowX, windowY, windowW, windowH);
-    windows(windowX + 300, windowY, windowW, windowH);
-
-    windowX -= moveToLeft;
-    if (windowX + windowW + gap < -320) {
-      windowX = width + gap;
-    }
-
-    blueBox(boxX, boxY, boxW, boxH);
-    woodenBox(boxX, boxY, boxW, boxH);
-
-    boxX -= moveToLeft2;
-    if (boxX + boxW + gap < -320) {
-      boxX = width + gap;
-    }
-
-    if (frameCount % 100 === 0) {
-      generateNewBox();
-    }
-
-    drawBoxes();
-
-    for (let i = fuels.length - 1; i >= 0; i--) {
-      let currentFuel = fuels[i];
-
-      fuel(currentFuel.x, currentFuel.y);
-
-      if (currentFuel.x + 40 + gap < 0) {
-        fuels.splice(i, 1);
-      }
-    }
-
-    if (frameCount % 80 === 0) {
-      generateNewFuel();
-    }
-
-    drawFuels();
-
-    mover.Show();
-
-    for (let i = 0; i < fuels.length; i++) {
-      let currentFuel = fuels[i];
-
-      let characterLeft = mover.pos.x - 25;
-      let characterRight = mover.pos.x + 25;
-      let characterTop = mover.pos.y - 75;
-      let characterBottom = mover.pos.y + 75;
-
-      let fuelLeft = currentFuel.x;
-      let fuelRight = currentFuel.x + 40;
-      let fuelTop = currentFuel.y;
-      let fuelBottom = currentFuel.y + 40;
-
-      if (
-        characterLeft < fuelRight &&
-        characterRight > fuelLeft &&
-        characterTop < fuelBottom &&
-        characterBottom > fuelTop
-      ) {
-        fuelCounter++;
-        fuels.splice(i, 1);
-      }
-    }
-
-    fill(255);
-    textSize(20);
-    textAlign(RIGHT, TOP);
-    text("Fuel Counter: " + fuelCounter, width - 10, 10);
-  }
-}
-
-function drawStart() {
-  background(0);
-  image(img2, 1, 1, 1000, 750);
-  fill(254, 227, 132);
-  textSize(50);
-  textFont("Darumadrop One");
-  textAlign(CENTER, CENTER);
-  text("Are YOU Ready For A New Adventure?", 500, 120);
-
-  if (!button) {
-    button = createButton("Start!");
-    button.position(1000, 550);
-    button.mousePressed(handleClick);
-    button.addClass("custom-button");
-  }
-
-  if (button2) {
-    button2.hide();
-  }
-}
-
-function drawStartTwo() {
-  background(0);
-  image(img, 0, 50, 1000, 575);
-  fill(210, 43, 43);
-  textSize(150);
-  textFont("Darumadrop One");
-  text("URGENT!", 380, 190);
-  textSize(23);
-  textFont("Darumadrop One");
-  stroke(0, 0, 0);
-  fill(255, 255, 255);
-  strokeWeight(4);
-  text("NMD is stuck on the wrong spaceship full of impostors.", 390, 420);
-  text(
-    "Help NMD escape by collecting fuel and fly away in the JTH spaceship!",
-    450,
-    450
-  );
-  text(
-    "But be careful, the impostors are chasing you, and if you touch the boxes, they'll catch you!",
-    520,
-    475
-  );
-  text("GO!", 825, 540);
-
-  if (!button2) {
-    button2 = createButton("");
-    button2.position(965, 575);
-    button2.addClass("button2");
-
-    button2.mouseOver(changeButtonContent);
-    button2.mouseOut(resetButtonContent);
-    button2.mousePressed(handleClickButton2);
-  }
-
-  if (button) {
-    button.hide();
-  }
 }
