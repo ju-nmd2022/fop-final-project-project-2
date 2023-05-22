@@ -101,15 +101,8 @@ function handleClick() {
 function handleClickButton2() {
   if (state === "secondStart") {
     state = "gameScreen";
-    loadGameScreen();
   }
 }
-
-/*function loadGameScreen() {
-  const gameFrame = document.getElementById("gameFrame");
-  gameFrame.src = "gameScreen.html";
-  gameFrame.style.display = "block";
-}*/
 
 // Function to change button2 content on mouse over
 function changeButtonContent() {
