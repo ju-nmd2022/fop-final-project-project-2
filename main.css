@@ -50,3 +50,15 @@ body {
 .button2:hover {
   cursor: pointer;
 }
+
+.play-again-button {
+  font-family: "Darumadrop One", cursive;
+  font-size: 20px;
+  color: white;
+  background: none;
+	border: none;
+  cursor: pointer;
+}
+.play-again-button:hover {
+  color: red;
+}

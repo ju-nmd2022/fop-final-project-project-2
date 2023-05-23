@@ -5,6 +5,7 @@ let button;
 let button2;
 let mover;
 let characterSpeed = 5;
+let playAgainButton;
 
 // function preload() {
 //   img = loadImage("./Spacebak.png");
@@ -137,7 +138,7 @@ function draw() {
   } else if (state === "secondStart") {
     drawStartTwo();
   } else if (state === "gameScreen") {
-    if (fuelCounter < 3) {
+    if (fuelCounter < 1) {
       gameScreen1();
     } else {
       Win();
@@ -414,5 +415,29 @@ function Win() {
   fill(230, 230, 230);
   textSize(40);
   textFont("Darumadrop One");
-  text("Play again!", 780, 600);
+  // text("Play again!", 780, 600);
+  
+  if (!playAgainButton) {
+    playAgainButton = createButton("Play again!");
+    playAgainButton.position(800, 600);
+    playAgainButton.addClass("play-again-button");
+    playAgainButton.mousePressed(handleClickPlayAgain);
+  }
 }
+function handleClickPlayAgain() {
+  // Reset any necessary variables or states
+  state = "start"; // Reset the game state to the start
+  fuelCounter = 0; // Reset the fuel counter to 0
+   // Reset the position of the character, boxes, fuels, etc.
+  mover.pos.x = 200;
+  mover.pos.y = 200;
+  boxX = 100;
+  boxes = [];
+  fuels = [];
+
+  // Hide the play again button
+  playAgainButton.hide();
+
+  // Show the initial start screen
+  drawStart();
+} 
