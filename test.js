@@ -7,6 +7,8 @@ let mover;
 let characterSpeed = 5;
 let playAgainButton;
 
+
+
 // function preload() {
 //   img = loadImage("./Spacebak.png");
 //   img2 = loadImage("./space.jpg");
@@ -416,20 +418,29 @@ function Win() {
   textFont("Darumadrop One");
   // text("Play again!", 780, 600);
 
-  if (!playAgainButton) {
+  if (playAgainButton){
+    playAgainButton.show(); } else {
     playAgainButton = createButton("Play again!");
     playAgainButton.position(800, 600);
     playAgainButton.addClass("play-again-button");
     playAgainButton.mousePressed(handleClickPlayAgain);
   }
-}
+
 function handleClickPlayAgain() {
   // Reset any necessary variables or states
   state = "start"; // Reset the game state to the start
   fuelCounter = 0; // Reset the fuel counter to 0
   // Reset the position of the character, boxes, fuels, etc.
   mover.pos.x = 200;
-  mover.pos.y = 200;
+  mover.pos.y = 550;
+  backPackX = mover.pos.x - 26;
+  goggleX = mover.pos.x + 7;
+  goggleY = 25;
+  Rightleg = 45;
+  Leftleg = 45;
+  Rinvy = 41;
+  Linvy = 41;
+  bodyY = 65;
   boxX = 100;
   boxes = [];
   fuels = [];
@@ -439,4 +450,5 @@ function handleClickPlayAgain() {
 
   // Show the initial start screen
   drawStart();
+}
 }
