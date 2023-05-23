@@ -9,6 +9,9 @@ function setup() {
 
   img = loadImage("./Spacebak.png");
   img2 = loadImage("./space.jpg");
+  img3 = loadImage("./gsmeover.jpg")
+  img4 = loadImage("./won.jpg")
+
 }
 
 state = "start";
@@ -19,6 +22,7 @@ function draw() {
   } else if (state === "secondStart") {
     drawStartTwo();
   } else if (state === "gameScreen") {
+  
   }
 }
 
@@ -80,8 +84,8 @@ function drawStartTwo() {
     button2.position(965, 575);
     button2.addClass("button2");
 
-    button2.mouseOver(changeButtonContent);
-    button2.mouseOut(resetButtonContent);
+    // button2.mouseOver(changeButtonContent);
+    // button2.mouseOut(resetButtonContent);
     button2.mousePressed(handleClickButton2); // Add the event handler
   }
 
@@ -90,6 +94,20 @@ function drawStartTwo() {
     button.hide();
   }
 }
+function gameOver() {
+  background(0);
+  image(img3, 0, 50, 1000, 575);
+  fill(230, 230, 230);
+  textSize(40);
+  textFont("Darumadrop One");
+  text("Try again!", 780, 600);
+  textSize(23);
+}
+
+function Win() {
+  background(0);
+  image(img4, 0, 50, 1000, 575);
+} 
 
 // Function to handle button click event
 function handleClick() {

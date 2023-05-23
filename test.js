@@ -9,6 +9,8 @@ let characterSpeed = 5;
 function preload() {
   img = loadImage("./Spacebak.png");
   img2 = loadImage("./space.jpg");
+  img3 = loadImage("./gsmeover.jpg")
+  img4 = loadImage("./won.jpg")
 }
 
 function setup() {
@@ -387,13 +389,16 @@ function handleClickButton2() {
     gameScreen1();
   }
 }
-
-// // Function to change button2 content on mouse over
-// function changeButtonContent() {
-//   button2.html('<i class="material-icons-outlined">rocket_launch</i>');
-// }
-
-// // Function to reset button2 content on mouse out
-// function resetButtonContent() {
-//   button2.html('<i class="material-icons-outlined">rocket</i>');
-// }
+function gameOver() {
+  background(0);
+  image(img3, 0, 50, 1000, 575);
+  fill(230, 230, 230);
+  textSize(40);
+  textFont("Darumadrop One");
+  text("Try again!", 780, 600);
+  textSize(23);
+}
+function Win() {
+  background(0);
+  image(img4, 0, 50, 1000, 575);
+} 
