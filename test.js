@@ -6,17 +6,23 @@ let button2;
 let mover;
 let characterSpeed = 5;
 
-function preload() {
-  img = loadImage("./Spacebak.png");
-  img2 = loadImage("./space.jpg");
-  img3 = loadImage("./gsmeover.jpg")
-  img4 = loadImage("./won.jpg")
-}
+// function preload() {
+//   img = loadImage("./Spacebak.png");
+//   img2 = loadImage("./space.jpg");
+//   img3 = loadImage("./gsmeover.jpg")
+//   img4 = loadImage("./won.jpg")
+// }
 
 function setup() {
   createCanvas(1000, 650);
   frameRate(30);
   mover = new Mover(200, 200);
+
+  img = loadImage("./Spacebak.png");
+  img2 = loadImage("./space.jpg");
+  img3 = loadImage("./gsmeover.jpg")
+  img4 = loadImage("./won.jpg")
+
 }
 
 let windowX = 100;
