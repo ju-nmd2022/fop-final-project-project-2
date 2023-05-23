@@ -6,7 +6,6 @@ let button2;
 let mover;
 let characterSpeed = 5;
 
-
 function preload() {
   img = loadImage("./Spacebak.png");
   img2 = loadImage("./space.jpg");
@@ -26,18 +25,104 @@ let moveToLeft = 7;
 let moveToLeft2 = 10;
 let gap = 30;
 
-let boxX = 321;
+/*let boxX = 321;
 let boxY = 312;
 let boxW = 40;
-let boxH = 40;
+let boxH = 40;*/
 
 let fuelX = 321;
 let fuelY = 312;
 
+let fuels = [];
 let fuelCounter = 0;
 
-let fuels = [];
+let boxX = 100;
+let boxY = 200;
+let boxW = 100;
+let boxH = 100;
+let boxes = [];
 
+// function for blue box
+function blueBox(boxX, boxY, boxW, boxH) {
+  //blue box
+  fill(84, 196, 198);
+  strokeWeight(4);
+  stroke(99, 148, 147);
+  rect(boxX + 76, boxY + 276, boxW + 15, boxH - 10, 5);
+  stroke(150, 150, 150);
+  strokeWeight(2.5);
+  line(boxX + 80, boxY + 308, boxX + 99, boxY + 308);
+  line(boxX + 99, boxY + 308, boxX + 116, boxY + 322);
+  line(boxX + 116, boxY + 322, boxX + 150, boxY + 322);
+  line(boxX + 150, boxY + 322, boxX + 166, boxY + 308);
+  line(boxX + 166, boxY + 308, boxX + 187, boxY + 308);
+}
+
+// function for wooden box
+function woodenBox(boxX, boxY, boxW, boxH) {
+  //wooden box
+  fill(202, 164, 114);
+  strokeWeight(4);
+  stroke(141, 114, 79);
+  rect(boxX + 300, boxY + 276, boxW + 15, boxH - 10, 5);
+  fill(110, 110, 110);
+  // nails
+  noStroke();
+  ellipse(boxX + 307, boxY + 295, boxW - 92, boxH - 92);
+  ellipse(boxX + 407, boxY + 295, boxW - 92, boxH - 92);
+  ellipse(boxX + 307, boxY + 315, boxW - 92, boxH - 92);
+  ellipse(boxX + 407, boxY + 315, boxW - 92, boxH - 92);
+  ellipse(boxX + 307, boxY + 335, boxW - 92, boxH - 92);
+  ellipse(boxX + 407, boxY + 335, boxW - 92, boxH - 92);
+  ellipse(boxX + 307, boxY + 355, boxW - 92, boxH - 92);
+  ellipse(boxX + 407, boxY + 355, boxW - 92, boxH - 92);
+  // wood lines
+  stroke(106, 81, 50);
+  strokeWeight(2.5);
+  line(boxX + 301, boxY + 346, boxX + 414, boxY + 346);
+  line(boxX + 301, boxY + 326, boxX + 414, boxY + 326);
+  line(boxX + 301, boxY + 306, boxX + 414, boxY + 306);
+  line(boxX + 301, boxY + 286, boxX + 414, boxY + 286);
+}
+
+// function to generate a random box type (either blue or wood)
+function generateRandomBoxType() {
+  // Generate a random number (0 or 1) to determine the box type
+  return floor(random(2));
+}
+
+// function to generate new boxes in random orders
+
+function generateNewBox() {
+  let newBoxType = generateRandomBoxType();
+  let newBoxX = width + gap; // Initial X position of the new box
+  let newBoxY = boxY; // Same Y position as the existing boxes
+
+  boxes.push({
+    type: newBoxType,
+    x: newBoxX,
+    y: newBoxY,
+  });
+}
+
+// function to display new boxes on the canvas
+function drawBoxes() {
+  for (let i = boxes.length - 1; i >= 0; i--) {
+    let currentBox = boxes[i];
+
+    if (currentBox.type === 0) {
+      blueBox(currentBox.x, currentBox.y, boxW, boxH);
+    } else {
+      woodenBox(currentBox.x, currentBox.y, boxW, boxH);
+    }
+
+    currentBox.x -= moveToLeft2;
+
+    if (currentBox.x + boxW + gap < -320) {
+      boxes.splice(i, 1); // Remove the box from the array if it's out of the screen
+    }
+  }
+}
 
 function draw() {
   if (state === "start") {
@@ -71,19 +156,9 @@ function windows(windowX, windowY, windowW, windowH) {
   }
 }
 
-function blueBox(x, y, w, h) {
-  fill(0, 0, 255);
-  rect(x, y, w, h);
-}
-
-function woodenBox(x, y, w, h) {
-  fill(139, 69, 19);
-  rect(x + 50, y + 50, w, h);
-}
-
 function generateNewBox() {
   let newBoxX = width + gap;
-  let newBoxY = random(200, height - 200);
+  let newBoxY = boxY;
 
   boxes.push({
     x: newBoxX,
@@ -126,12 +201,40 @@ function fuel(fuelX, fuelY) {
   ellipse(fuelX + 2, fuelY + 2, 7, 5);
 }
 
+// function to generate new fuels at random y positions
+function generateNewFuel() {
+  let newFuelX = width + gap; // Initial X position of the new fuel
+  let newFuelY = random(200, height - 200); // Random Y position within a desired range
+
+  fuels.push({
+    x: newFuelX,
+    y: newFuelY,
+  });
+}
+
+// function to display new fuels on the canvas
+function drawFuels() {
+  for (let i = fuels.length - 1; i >= 0; i--) {
+    let currentFuel = fuels[i];
+
+    fuel(currentFuel.x, currentFuel.y);
+
+    currentFuel.x -= moveToLeft2;
+
+    /* if (currentFuel.x + 40 + gap < 0) {
+      fuels.splice(i, 1); // Remove the fuel from the array if it's out of the screen
+    } */
+  }
+}
+
+//placeholder for among us character code
+
 function gameScreen1() {
   scenery();
-
   windows(windowX, windowY, windowW, windowH);
   windows(windowX + 300, windowY, windowW, windowH);
 
+  // Move windows to the left
   windowX -= moveToLeft;
   if (windowX + windowW + gap < -320) {
     windowX = width + gap;
@@ -140,54 +243,65 @@ function gameScreen1() {
   blueBox(boxX, boxY, boxW, boxH);
   woodenBox(boxX, boxY, boxW, boxH);
 
+  // Move boxes to the left
   boxX -= moveToLeft2;
   if (boxX + boxW + gap < -320) {
     boxX = width + gap;
   }
 
+  // frequency of new boxes
   if (frameCount % 100 === 0) {
     generateNewBox();
   }
- 
+
   drawBoxes();
-  drawFuels();
-  mover.Show();
 
   for (let i = fuels.length - 1; i >= 0; i--) {
     let currentFuel = fuels[i];
 
     fuel(currentFuel.x, currentFuel.y);
 
+    // currentFuel.x -= moveToLeft2;
+
     if (currentFuel.x + 40 + gap < 0) {
-      fuels.splice(i, 1);
+      fuels.splice(i, 1); // Remove the fuel from the array if it's out of the screen
     }
   }
 
+  // frequency of new fuel
   if (frameCount % 80 === 0) {
     generateNewFuel();
   }
 
+  drawFuels();
 
+  // display among us character
+  mover.Show();
 
+  // code for collecting fuel
   for (let i = 0; i < fuels.length; i++) {
     let currentFuel = fuels[i];
 
+    // character's dimensions
     let characterLeft = mover.pos.x - 25;
     let characterRight = mover.pos.x + 25;
     let characterTop = mover.pos.y - 75;
     let characterBottom = mover.pos.y + 75;
 
+    // fuel's dimensions
     let fuelLeft = currentFuel.x;
     let fuelRight = currentFuel.x + 40;
     let fuelTop = currentFuel.y;
     let fuelBottom = currentFuel.y + 40;
 
+    // check for collision
     if (
       characterLeft < fuelRight &&
       characterRight > fuelLeft &&
       characterTop < fuelBottom &&
       characterBottom > fuelTop
     ) {
+      // if they collide, increase the counter and remove the fuel
       fuelCounter++;
       fuels.splice(i, 1);
     }
@@ -259,8 +373,6 @@ function drawStartTwo() {
     button.hide();
   }
 }
-
-
 
 // Function to handle button click event
 function handleClick() {
