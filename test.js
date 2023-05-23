@@ -170,11 +170,6 @@ function windows(windowX, windowY, windowW, windowH) {
   }
 }
 
-boxes.push({
-  x: newBoxX,
-  y: newBoxY,
-});
-
 function drawBoxes() {
   for (let i = boxes.length - 1; i >= 0; i--) {
     let currentBox = boxes[i];
@@ -331,7 +326,9 @@ function drawStart() {
   textAlign(CENTER, CENTER);
   text("Are YOU Ready For A New Adventure?", 500, 120);
 
-  if (!button) {
+  if (button) {
+    button.show();
+  } else {
     button = createButton("Start!");
     button.position(1000, 550);
     button.mousePressed(handleClick);
@@ -368,7 +365,9 @@ function drawStartTwo() {
   );
   text("GO!", 825, 540);
 
-  if (!button2) {
+  if (button2) {
+    button2.show();
+  } else {
     button2 = createButton("");
     button2.position(900, 575);
     button2.addClass("button2");
@@ -416,7 +415,7 @@ function Win() {
   textSize(40);
   textFont("Darumadrop One");
   // text("Play again!", 780, 600);
-  
+
   if (!playAgainButton) {
     playAgainButton = createButton("Play again!");
     playAgainButton.position(800, 600);
@@ -428,7 +427,7 @@ function handleClickPlayAgain() {
   // Reset any necessary variables or states
   state = "start"; // Reset the game state to the start
   fuelCounter = 0; // Reset the fuel counter to 0
-   // Reset the position of the character, boxes, fuels, etc.
+  // Reset the position of the character, boxes, fuels, etc.
   mover.pos.x = 200;
   mover.pos.y = 200;
   boxX = 100;
@@ -440,4 +439,4 @@ function handleClickPlayAgain() {
 
   // Show the initial start screen
   drawStart();
-} 
+}
