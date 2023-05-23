@@ -394,6 +394,10 @@ function handleClickButton2() {
     state = "gameScreen";
     gameScreen1();
   }
+
+  if (button2) {
+    button2.hide();
+  }
 }
 function gameOver() {
   background(0);
@@ -407,4 +411,8 @@ function gameOver() {
 function Win() {
   background(0);
   image(img4, 0, 50, 1000, 575);
+  fill(230, 230, 230);
+  textSize(40);
+  textFont("Darumadrop One");
+  text("Play again!", 780, 600);
 }
