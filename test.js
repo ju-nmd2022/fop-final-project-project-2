@@ -20,9 +20,8 @@ function setup() {
 
   img = loadImage("./Spacebak.png");
   img2 = loadImage("./space.jpg");
-  img3 = loadImage("./gsmeover.jpg")
-  img4 = loadImage("./won.jpg")
-
+  img3 = loadImage("./gsmeover.jpg");
+  img4 = loadImage("./won.jpg");
 }
 
 let windowX = 100;
@@ -138,7 +137,13 @@ function draw() {
   } else if (state === "secondStart") {
     drawStartTwo();
   } else if (state === "gameScreen") {
-    gameScreen1();
+    if (fuelCounter < 3) {
+      gameScreen1();
+    } else {
+      Win();
+    }
+  } else if (state === "gameOver") {
+    gameOver();
   }
 }
 
@@ -164,15 +169,10 @@ function windows(windowX, windowY, windowW, windowH) {
   }
 }
 
-function generateNewBox() {
-  let newBoxX = width + gap;
-  let newBoxY = boxY;
-
-  boxes.push({
-    x: newBoxX,
-    y: newBoxY,
-  });
-}
+boxes.push({
+  x: newBoxX,
+  y: newBoxY,
+});
 
 function drawBoxes() {
   for (let i = boxes.length - 1; i >= 0; i--) {
@@ -407,4 +407,4 @@ function gameOver() {
 function Win() {
   background(0);
   image(img4, 0, 50, 1000, 575);
-} 
+}
