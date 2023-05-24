@@ -138,7 +138,7 @@ function draw() {
   } else if (state === "secondStart") {
     drawStartTwo();
   } else if (state === "gameScreen") {
-    if (fuelCounter < 5) {
+    if (fuelCounter < 1) {
       gameScreen1();
     } else {
       Win();
@@ -460,7 +460,7 @@ function Win() {
     playAgainButton.show();
   } else {
     playAgainButton = createButton("Play again!");
-    playAgainButton.position(900, 650);
+    playAgainButton.position(350, 350);
     playAgainButton.addClass("play-again-button");
     playAgainButton.mousePressed(handleClickPlayAgain);
   }
