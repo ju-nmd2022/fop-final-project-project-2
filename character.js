@@ -1,4 +1,4 @@
-// among us character
+// among us character properties and positions
 //https://editor.p5js.org/pajay.l/sketches/QNkv9FjXp following code adapted from this website
 var backPackX;
 var goggleX;
@@ -10,7 +10,9 @@ var Rinvy = 41;
 var Linvy = 41;
 var bodyY = 65;
 
+// walking animation in right direction
 function RstartWalking() {
+  // interval exectutes the walk right function every second
   setInterval(function () {
     walk("right");
   }, 1000);
@@ -22,11 +24,14 @@ function LstartWalking() {
   }, 1000);
 }
 
+// leg animation, right or left as argument
 function walk(direction) {
   if (direction === "right") {
     Rightleg = Rightleg - 5;
     Rinvy = Rinvy - 5;
+    // delay 500ms to create natural leg movement as it's reversed
     setTimeout(function () {
+      // limit extent of leg movement and reverse
       if (Rightleg > Rightleg - 4) {
         Rightleg = Rightleg + 5;
         Rinvy = Rinvy + 5;
@@ -44,10 +49,16 @@ function walk(direction) {
   }
 }
 
-setTimeout(() => LstartWalking(), 530);
+/*setTimeout(() => LstartWalking(), 530);
+setTimeout(() => RstartWalking(), 100);*/
+
+LstartWalking();
+// delay right leg to imitate walking
 setTimeout(() => RstartWalking(), 100);
 
+// mover class to create instances of character
 class Mover {
+  // create and initialize object instance
   constructor(x, y) {
     this.pos = createVector(x, y);
     this.vel = 2;
