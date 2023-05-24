@@ -24,27 +24,14 @@ body {
   cursor: pointer;
 }
 
-.custom-button:active {
-  background-color: #430505;
-  transform: scale(0.95);
-}
-
 .button2 {
   background-color: #d22b2b;
   color: #e6d4d4;
-  padding: 10px 20px;
-  border-radius: 30px;
+  font-family: "Darumadrop One", cursive;
+  padding: 9px 9px;
+  border-radius: 20px;
   border: none;
-  margin-top: 21px;
-  margin-left: 130px;
-  width: 40px;
-  height: 40px;
-  font-size: 4px;
-  transform: scale(1.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-variation-settings: "FILL" 10, "wght" 300, "GRAD" 200, "opsz" 48;
+  font-size: 10px;
 }
 
 .button2:hover {
@@ -56,7 +43,7 @@ body {
   font-size: 20px;
   color: white;
   background: none;
-	border: none;
+  border: none;
   cursor: pointer;
 }
 .play-again-button:hover {

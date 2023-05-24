@@ -17,7 +17,7 @@ let playAgainButton;
 function setup() {
   createCanvas(1000, 650);
   frameRate(30);
-  mover = new Mover(200, 200);
+  mover = new Mover(200, 500);
 
   img = loadImage("./Spacebak.png");
   img2 = loadImage("./space.jpg");
@@ -390,7 +390,7 @@ function drawStartTwo() {
   fill(210, 43, 43);
   textSize(150);
   textFont("Darumadrop One");
-  text("URGENT!", 380, 190);
+  text("URGENT!", 320, 190);
   textSize(23);
   textFont("Darumadrop One");
   stroke(0, 0, 0);
@@ -400,24 +400,20 @@ function drawStartTwo() {
   text(
     "Help NMD escape by collecting fuel and fly away in the JTH spaceship!",
     450,
-    450
+    453
   );
   text(
     "But be careful, the impostors are chasing you, and if you touch the boxes, they'll catch you!",
-    520,
-    475
+    500,
+    485
   );
-  text("GO!", 825, 540);
 
   if (button2) {
     button2.show();
   } else {
-    button2 = createButton("");
-    button2.position(900, 575);
+    button2 = createButton("GO");
+    button2.position(1000, 600);
     button2.addClass("button2");
-
-    // button2.mouseOver(changeButtonContent);
-    // button2.mouseOut(resetButtonContent);
     button2.mousePressed(handleClickButton2);
   }
 
@@ -464,7 +460,7 @@ function Win() {
     playAgainButton.show();
   } else {
     playAgainButton = createButton("Play again!");
-    playAgainButton.position(800, 600);
+    playAgainButton.position(900, 650);
     playAgainButton.addClass("play-again-button");
     playAgainButton.mousePressed(handleClickPlayAgain);
   }

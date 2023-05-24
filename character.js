@@ -61,7 +61,7 @@ class Mover {
   // create and initialize object instance
   constructor(x, y) {
     this.pos = createVector(x, y);
-    this.vel = 2;
+    this.vel = 1;
     this.acc = 1;
   }
 
