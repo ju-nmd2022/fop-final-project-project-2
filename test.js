@@ -215,7 +215,7 @@ function fuel(fuelX, fuelY) {
 // function to generate new fuels at random y positions
 function generateNewFuel() {
   let newFuelX = width + gap; // initial X position of the new fuel
-  let newFuelY = random(100, height - 150); // random Y position within floor level and roof ish
+  let newFuelY = random(300, height - 110); // random Y position within floor level and roof ish
 
   // stores the new fuel object in array to later display on canvas, loops, fuel counter
   fuels.push({
@@ -265,7 +265,7 @@ function gameScreen1() {
   }
 
   // frequency of new boxes
-  if (frameCount % 100 === 0) {
+  if (frameCount % 60 === 0) {
     generateNewBox();
   }
 
@@ -314,7 +314,7 @@ function gameScreen1() {
   }*/
 
   // frequency of new fuel
-  if (frameCount % 80 === 0) {
+  if (frameCount % 70 === 0) {
     generateNewFuel();
   }
 
