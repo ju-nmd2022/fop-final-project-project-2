@@ -58,8 +58,8 @@ class Mover {
   // create and initialize object instance
   constructor(x, y) {
     this.pos = createVector(x, y);
-    this.vel = 0;
-    this.acc = 4;
+    this.vel = 1;
+    this.acc = 1;
 
     // these are here so the googles and backpack are visble from the begining
     backPackX = this.pos.x - 26;
@@ -79,11 +79,11 @@ class Mover {
 
     // Uses spacebar to jump
     if (keyIsDown(32)) {
-      this.vel = -3; //jump value
+      this.vel = -10; //jump value
       this.pos.y = this.pos.y + this.vel;
     }
 
-    // makes the character stop at the floor
+    // makes the character stop at the floor, y - level
     if (this.pos.y > 510) {
       this.pos.y = 510;
       this.vel = 0;
@@ -92,6 +92,7 @@ class Mover {
       this.vel = this.vel + this.acc;
     }
 
+    // start of among us character
     fill(0);
     strokeWeight(3);
     fill(137, 207, 200);
@@ -113,6 +114,6 @@ class Mover {
     fill(137, 207, 200);
     strokeWeight(3);
     ellipse(goggleX, this.pos.y - 5, 40, goggleY);
+    // end of among us character
   }
 }
-// end of among us character
