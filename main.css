@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css2?family=Darumadrop+One&display=swap");
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.custom-button {
+  background-color: #fee384;
+  color: #181818;
+  font-size: 20px;
+  font-family: "Darumadrop One", cursive;
+  padding: 10px 20px;
+  border-radius: 20px;
+}
+
+.custom-button:hover {
+  background-color: #ccb667;
+  cursor: pointer;
+}
+
+.button2 {
+  background-color: #d22b2b;
+  color: #e6d4d4;
+  font-family: "Darumadrop One", cursive;
+  padding: 9px 9px;
+  border-radius: 20px;
+}
+
+.button2:hover {
+  cursor: pointer;
+}
+
+.play-again-button {
+  font-family: "Darumadrop One", cursive;
+  font-size: 20px;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.play-again-button:hover {
+  color: red;
+}
+
+.try-again-button {
+  font-family: "Darumadrop One", cursive;
+  font-size: 40px;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.try-again-button:hover {
+  color: red;
+}
