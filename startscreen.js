@@ -9,9 +9,8 @@ function setup() {
 
   img = loadImage("./Spacebak.png");
   img2 = loadImage("./space.jpg");
-  img3 = loadImage("./gsmeover.jpg")
-  img4 = loadImage("./won.jpg")
-
+  img3 = loadImage("./gsmeover.jpg");
+  img4 = loadImage("./won.jpg");
 }
 
 state = "start";
@@ -22,7 +21,6 @@ function draw() {
   } else if (state === "secondStart") {
     drawStartTwo();
   } else if (state === "gameScreen") {
-  
   }
 }
 
@@ -107,7 +105,7 @@ function gameOver() {
 function Win() {
   background(0);
   image(img4, 0, 50, 1000, 575);
-} 
+}
 
 // Function to handle button click event
 function handleClick() {

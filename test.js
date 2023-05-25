@@ -72,7 +72,7 @@ function woodenBox(boxX, boxY, boxW, boxH) {
   fill(202, 164, 114);
   strokeWeight(4);
   stroke(141, 114, 79);
-  rect(boxX + 300, boxY + 276, boxW + 15, boxH - 10, 5);
+  rect(boxX + 76, boxY + 276, boxW + 15, boxH - 10, 5);
   fill(110, 110, 110);
   // nails
   noStroke();
@@ -87,10 +87,10 @@ function woodenBox(boxX, boxY, boxW, boxH) {
   // wood lines
   stroke(106, 81, 50);
   strokeWeight(2.5);
-  line(boxX + 301, boxY + 346, boxX + 414, boxY + 346);
-  line(boxX + 301, boxY + 326, boxX + 414, boxY + 326);
-  line(boxX + 301, boxY + 306, boxX + 414, boxY + 306);
-  line(boxX + 301, boxY + 286, boxX + 414, boxY + 286);
+  line(boxX + 76, boxY + 346, boxX + 100, boxY + 346);
+  line(boxX + 76, boxY + 326, boxX + 414, boxY + 326);
+  line(boxX + 76, boxY + 306, boxX + 414, boxY + 306);
+  line(boxX + 76, boxY + 286, boxX + 414, boxY + 286);
 }
 
 // function to generate a random box type (either blue or wood)
@@ -105,7 +105,7 @@ function generateNewBox() {
   let newBoxX = width + gap; // initial X position of the new box
   let newBoxY = boxY; // always same Y position
 
-  // stores the new box in array to later display boxes on canvas and dynamic generation
+  // stores the new box in array to later display boxes on canvas, loops, store info
   boxes.push({
     type: newBoxType,
     x: newBoxX,
@@ -114,9 +114,11 @@ function generateNewBox() {
 }
 
 // function to display new boxes on the canvas
+// the following 3 lines of code have been adapted from https://www.w3docs.com/snippets/javascript/how-to-loop-through-array-and-remove-items-without-breaking-the-for-loop.html
 function drawBoxes() {
+  // iterate over each box object
   for (let i = boxes.length - 1; i >= 0; i--) {
-    let currentBox = boxes[i];
+    let currentBox = boxes[i]; // and assign currentbox variable for readability and rendering
 
     if (currentBox.type === 0) {
       blueBox(currentBox.x, currentBox.y, boxW, boxH);
@@ -138,16 +140,18 @@ function draw() {
   } else if (state === "secondStart") {
     drawStartTwo();
   } else if (state === "gameScreen") {
-    if (fuelCounter < 1) {
+    if (fuelCounter < 10) {
       gameScreen1();
     } else {
       Win();
     }
+    // prova lägg collision här??
   } else if (state === "gameOver") {
     gameOver();
   }
 }
 
+// background and floor
 function scenery() {
   background(110, 127, 128);
   fill(192, 192, 192);
@@ -155,10 +159,12 @@ function scenery() {
   rect(0, 530, width, 400);
 }
 
+//function for window
 function windows(windowX, windowY, windowW, windowH) {
   fill(0, 0, 0);
   rect(windowX + 30, windowY + 40, windowW + 15, windowH - 25, 20);
 
+  // if window is between these x positions, draw pluto planet
   if (windowX < 122 && windowX > 10) {
     fill(200, 200, 200);
     ellipse(157, 169, 25, 25);
@@ -184,6 +190,7 @@ function windows(windowX, windowY, windowW, windowH) {
   }
 }*/
 
+// function for fuel
 function fuel(fuelX, fuelY) {
   fill(255, 0, 0);
   noStroke();
@@ -207,9 +214,10 @@ function fuel(fuelX, fuelY) {
 
 // function to generate new fuels at random y positions
 function generateNewFuel() {
-  let newFuelX = width + gap; // Initial X position of the new fuel
-  let newFuelY = random(200, height - 200); // Random Y position within a desired range
+  let newFuelX = width + gap; // initial X position of the new fuel
+  let newFuelY = random(100, height - 150); // random Y position within floor level and roof ish
 
+  // stores the new fuel in array to later display on canvas, loops, fuel counter
   fuels.push({
     x: newFuelX,
     y: newFuelY,
@@ -218,10 +226,11 @@ function generateNewFuel() {
 
 // function to display new fuels on the canvas
 function drawFuels() {
+  // iterate over each fuel object
   for (let i = fuels.length - 1; i >= 0; i--) {
-    let currentFuel = fuels[i];
+    let currentFuel = fuels[i]; // and assign currentfuel variable for readability and rendering
 
-    fuel(currentFuel.x, currentFuel.y);
+    fuel(currentFuel.x, currentFuel.y); // new x and y values for the fuel
 
     currentFuel.x -= moveToLeft2;
 
@@ -233,23 +242,25 @@ function drawFuels() {
 
 //placeholder for among us character code
 
+// function for the game screen itself
 function gameScreen1() {
   scenery();
   windows(windowX, windowY, windowW, windowH);
   windows(windowX + 300, windowY, windowW, windowH);
 
-  // Move windows to the left
+  // move windows to the left
   windowX -= moveToLeft;
+  // if right edge of window is in left of screen
   if (windowX + windowW + gap < -320) {
+    // "reset" position to the right of screen
     windowX = width + gap;
   }
 
-  blueBox(boxX, boxY, boxW, boxH);
-  woodenBox(boxX, boxY, boxW, boxH);
-
-  // Move boxes to the left
+  // move initial box x position to the left
   boxX -= moveToLeft2;
+  // if right edge of box is in left of screen
   if (boxX + boxW + gap < -320) {
+    // "reset" position to the right of screen
     boxX = width + gap;
   }
 
@@ -265,42 +276,28 @@ function gameScreen1() {
     let currentBox = boxes[i];
     // Box dimensions
     let boxLeft = currentBox.x + 76;
-    let boxRight = currentBox.x + boxW + 15;
-    let boxTop = currentBox.y + 276;
-    let boxBottom = currentBox.y + boxH - 10;
+    let boxRight = currentBox.x + boxW + 15 + 76;
+    let boxTop = currentBox.y + 275;
+    let boxBottom = currentBox.y + boxH - 10 + 275;
 
     // Character dimensions
-    let characterLeft = mover.pos.x - 25;
-    let characterRight = mover.pos.x + 25;
-    let characterTop = mover.pos.y - 75;
-    let characterBottom = mover.pos.y + 75;
+    let characterLeft = mover.pos.x - 20;
+    let characterRight = mover.pos.x + 20;
+    let characterTop = mover.pos.y - 50;
+    let characterBottom = mover.pos.y + 50;
 
+    console.log("charTop:", characterTop);
+    console.log("boxBottom:", boxBottom);
+    console.log("charBottom:", characterBottom);
+    console.log("boxTop:", boxTop);
     // Check for collision with blue box
-    if (
-      characterLeft < boxRight &&
-      characterRight > boxLeft &&
-      characterTop < boxBottom &&
-      characterBottom > boxTop &&
-      currentBox.type === 0
-    ) {
-      // Collision with blue box, call gameOver()
-      state = "gameOver";
-      gameOver();
-      return; // Exit the function to stop the game
-    }
-
-    // Check for collision with wooden box
-    if (
-      characterLeft < boxRight &&
-      characterRight > boxLeft &&
-      characterTop < boxBottom &&
-      characterBottom > boxTop &&
-      currentBox.type === 1
-    ) {
-      // Collision with wooden box, call gameOver()
-      state = "gameOver";
-      gameOver();
-      return; // Exit the function to stop the game
+    if (characterLeft < boxRight && characterRight > boxLeft) {
+      if (characterBottom > boxTop && characterTop < boxTop) {
+        // Collision with wooden box, call gameOver()
+        state = "gameOver";
+        gameOver();
+        return; // Exit the function to stop the game
+      }
     }
   }
 
@@ -327,6 +324,7 @@ function gameScreen1() {
   mover.Show();
 
   // code for collecting fuel
+  // loop to iterate through each fuel
   for (let i = 0; i < fuels.length; i++) {
     let currentFuel = fuels[i];
 
@@ -349,7 +347,7 @@ function gameScreen1() {
       characterTop < fuelBottom &&
       characterBottom > fuelTop
     ) {
-      // if they collide, increase the counter and remove the fuel
+      // if they collide, increase the counter and remove one fuel at that index
       fuelCounter++;
       fuels.splice(i, 1);
     }
@@ -398,12 +396,12 @@ function drawStartTwo() {
   strokeWeight(4);
   text("NMD is stuck on the wrong spaceship full of impostors.", 390, 420);
   text(
-    "Help NMD escape by collecting fuel and fly away in the JTH spaceship!",
+    "Help NMD escape by collecting 15 fuels and fly away in the JTH spaceship!",
     450,
     453
   );
   text(
-    "But be careful, the impostors are chasing you, and if you touch the boxes, they'll catch you!",
+    "But be careful, the impostors are chasing you, and if you stumble on the boxes, they'll catch you!",
     500,
     485
   );

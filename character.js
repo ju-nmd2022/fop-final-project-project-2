@@ -84,8 +84,8 @@ class Mover {
     }
 
     // makes the character stop at the floor
-    if (this.pos.y > 550) {
-      this.pos.y = 550;
+    if (this.pos.y > 515) {
+      this.pos.y = 515;
       this.vel = 0;
     } else {
       this.pos.y = this.pos.y + this.vel;
