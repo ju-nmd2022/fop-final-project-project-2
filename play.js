@@ -132,7 +132,7 @@ function draw() {
     let newBoxX = width; // initial X position of the new box
     let newBoxY = boxY; // always same Y position
 
-    // stores the new box in array to later display boxes on canvas, loops, store info
+    // stores the new box in array to later display on canvas & for loops etc
     boxes.push({
       type: newBoxType,
       x: newBoxX,
@@ -145,7 +145,7 @@ function draw() {
   function drawBoxes() {
     // iterate over each box object
     for (let i = boxes.length - 1; i >= 0; i--) {
-      let currentBox = boxes[i]; // and assign currentbox variable for readability and rendering
+      let currentBox = boxes[i]; // and assign currentbox variable
 
       if (currentBox.type === 0) {
         blueBox(currentBox.x, currentBox.y, boxW, boxH);
@@ -184,7 +184,7 @@ function draw() {
     let newFuelX = width; // initial X position of the new fuel
     let newFuelY = random(300, height - 110); // random Y position within floor level and roof ish
 
-    // stores the new fuel object in array to later display on canvas, loops, fuel counter
+    // stores the new fuel object in array to later display on canvas & for loops etc
     fuels.push({
       x: newFuelX,
       y: newFuelY,
@@ -436,7 +436,7 @@ function draw() {
     // Reset any necessary variables or states
     state = "start"; // Reset the game state to the start
     fuelCounter = 0; // Reset the fuel counter to 0
-    // Reset the position of the character, boxes, fuels, etc.
+    // Reset arrays and position of character
     mover.pos.x = 200;
     mover.pos.y = 550;
     backPackX = mover.pos.x - 26;
@@ -447,7 +447,6 @@ function draw() {
     Rinvy = 41;
     Linvy = 41;
     bodyY = 65;
-    //boxX = 100;
     boxes = [];
     fuels = [];
 
