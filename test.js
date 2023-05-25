@@ -134,16 +134,12 @@ function draw() {
   } else if (state === "secondStart") {
     drawStartTwo();
   } else if (state === "gameScreen") {
-    if (fuelCounter < 10) {
+    if (fuelCounter < 5) {
       gameScreen1();
     } else {
       Win();
     }
   } else if (state === "gameOver") {
-    for (let i = 0; i < boxes.length; i++) {
-      let currentBox = boxes[i];
-      gameScreen1();
-    }
     gameOver();
   }
 
@@ -375,6 +371,10 @@ function draw() {
 
     if (button2) {
       button2.hide();
+    }
+
+    if (playAgainButton) {
+      playAgainButton.hide();
     }
   }
 
