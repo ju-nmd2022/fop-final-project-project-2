@@ -1,10 +1,3 @@
-let state = "start";
-let button;
-let button2;
-let mover;
-let playAgainButton;
-let tryAgainButton;
-
 function setup() {
   createCanvas(1000, 650);
   frameRate(30);
@@ -15,6 +8,13 @@ function setup() {
   img3 = loadImage("./gsmeover.jpg");
   img4 = loadImage("./won.jpg");
 }
+
+let state = "start";
+let button;
+let button2;
+let mover;
+let playAgainButton;
+let tryAgainButton;
 
 let windowX = 100;
 let windowY = 100;
@@ -192,6 +192,7 @@ function draw() {
   }
 
   // function to display new fuels on the canvas
+  // the following 3 lines of code have been adapted from https://www.w3docs.com/snippets/javascript/how-to-loop-through-array-and-remove-items-without-breaking-the-for-loop.html
   function drawFuels() {
     // iterate over each fuel object
     for (let i = fuels.length - 1; i >= 0; i--) {
@@ -225,7 +226,7 @@ function draw() {
       boxX = width;
     }
 
-    // frequency of new boxes
+    // frequency of new boxes called every 60 frames
     if (frameCount % 60 === 0) {
       generateNewBox();
     }
@@ -234,6 +235,7 @@ function draw() {
 
     // Check for collision with boxes
     // for loop to iterate over each box object
+    // help from labs and chatgpt were used for the following collision code
     for (let i = 0; i < boxes.length; i++) {
       let currentBox = boxes[i];
       // Box dimensions
@@ -259,7 +261,7 @@ function draw() {
         }
       }
     }
-    // frequency of new fuel
+    // frequency of new fuel called every 70 frames
     if (frameCount % 70 === 0) {
       generateNewFuel();
     }
@@ -271,6 +273,7 @@ function draw() {
 
     // code for collecting fuel
     // loop to iterate over each fuel object
+    // help from labs and chatgpt were used for the following collision code
     for (let i = 0; i < fuels.length; i++) {
       let currentFuel = fuels[i];
 
@@ -348,7 +351,7 @@ function draw() {
     strokeWeight(4);
     text("NMD is stuck on the wrong spaceship full of impostors.", 390, 420);
     text(
-      "Help NMD escape by collecting 15 fuels and fly away in the JTH spaceship!",
+      "Help NMD escape by collecting 10 fuels and fly away in the JTH spaceship!",
       450,
       453
     );
