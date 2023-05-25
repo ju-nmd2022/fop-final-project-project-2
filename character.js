@@ -49,9 +49,6 @@ function walk(direction) {
   }
 }
 
-/*setTimeout(() => LstartWalking(), 530);
-setTimeout(() => RstartWalking(), 100);*/
-
 LstartWalking();
 // delay right leg to imitate walking
 setTimeout(() => RstartWalking(), 100);
@@ -63,9 +60,10 @@ class Mover {
     this.pos = createVector(x, y);
     this.vel = 0;
     this.acc = 4;
+
+    // these are here so the googles and backpack are visble from the begining
     backPackX = this.pos.x - 26;
     goggleX = this.pos.x + 7;
-    // these are here so the googles and backpack are visble from the begining
   }
 
   Show() {
