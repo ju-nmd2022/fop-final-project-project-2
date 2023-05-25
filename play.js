@@ -23,14 +23,9 @@ let windowX = 100;
 let windowY = 100;
 let windowW = 100;
 let windowH = 100;
-let moveToLeft = 7;
-let moveToLeft2 = 10;
+let moveToLeft = 5;
+let moveToLeft2 = 15;
 let gap = 30;
-
-/*let boxX = 321;
-let boxY = 312;
-let boxW = 40;
-let boxH = 40;*/
 
 let fuelX = 321;
 let fuelY = 312;
@@ -121,10 +116,6 @@ function drawBoxes() {
     }
 
     currentBox.x -= moveToLeft2;
-
-    /*if (currentBox.x + boxW + gap < -320) {
-      boxes.splice(i, 1); // Remove the box from the array if it's out of the screen
-    }*/
   }
 }
 
@@ -171,21 +162,6 @@ function draw() {
       ellipse(160, 170, 4, 4);
     }
   }
-
-  /*function drawBoxes() {
-  for (let i = boxes.length - 1; i >= 0; i--) {
-    let currentBox = boxes[i];
-
-    blueBox(currentBox.x, currentBox.y, boxW, boxH);
-
-    currentBox.x -= moveToLeft2;
-
-    /*if (currentBox.x + boxW + gap < 0) {
-      boxes.splice(i, 1);
-    }
-  }
-}*/
-
   // function for fuel
   function fuel(fuelX, fuelY) {
     fill(255, 0, 0);
@@ -229,14 +205,8 @@ function draw() {
       fuel(currentFuel.x, currentFuel.y); // new x and y values for the fuel
 
       currentFuel.x -= moveToLeft2;
-
-      /* if (currentFuel.x + 40 + gap < 0) {
-      fuels.splice(i, 1); // Remove the fuel from the array if it's out of the screen
-    } */
     }
   }
-
-  //placeholder for among us character code
 
   // function for the game screen itself
   function gameScreen1() {
@@ -296,19 +266,6 @@ function draw() {
         }
       }
     }
-
-    /*for (let i = fuels.length - 1; i >= 0; i--) {
-    let currentFuel = fuels[i];
-
-    fuel(currentFuel.x, currentFuel.y);
-
-    // currentFuel.x -= moveToLeft2;
-
-    if (currentFuel.x + 40 + gap < 0) {
-      fuels.splice(i, 1); // Remove the fuel from the array if it's out of the screen
-    }
-  }*/
-
     // frequency of new fuel
     if (frameCount % 70 === 0) {
       generateNewFuel();
@@ -452,8 +409,6 @@ function draw() {
     fill(230, 230, 230);
     textSize(40);
     textFont("Darumadrop One");
-    // text("Play again!", 780, 600);
-
     if (playAgainButton) {
       playAgainButton.show();
     } else {
