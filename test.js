@@ -76,21 +76,21 @@ function woodenBox(boxX, boxY, boxW, boxH) {
   fill(110, 110, 110);
   // nails
   noStroke();
-  ellipse(boxX + 307, boxY + 295, boxW - 92, boxH - 92);
-  ellipse(boxX + 407, boxY + 295, boxW - 92, boxH - 92);
-  ellipse(boxX + 307, boxY + 315, boxW - 92, boxH - 92);
-  ellipse(boxX + 407, boxY + 315, boxW - 92, boxH - 92);
-  ellipse(boxX + 307, boxY + 335, boxW - 92, boxH - 92);
-  ellipse(boxX + 407, boxY + 335, boxW - 92, boxH - 92);
-  ellipse(boxX + 307, boxY + 355, boxW - 92, boxH - 92);
-  ellipse(boxX + 407, boxY + 355, boxW - 92, boxH - 92);
+  ellipse(boxX + 85, boxY + 295, boxW - 92, boxH - 92);
+  ellipse(boxX + 182, boxY + 295, boxW - 92, boxH - 92);
+  ellipse(boxX + 85, boxY + 315, boxW - 92, boxH - 92);
+  ellipse(boxX + 182, boxY + 315, boxW - 92, boxH - 92);
+  ellipse(boxX + 85, boxY + 335, boxW - 92, boxH - 92);
+  ellipse(boxX + 182, boxY + 335, boxW - 92, boxH - 92);
+  ellipse(boxX + 85, boxY + 355, boxW - 92, boxH - 92);
+  ellipse(boxX + 182, boxY + 355, boxW - 92, boxH - 92);
   // wood lines
   stroke(106, 81, 50);
   strokeWeight(2.5);
-  line(boxX + 76, boxY + 346, boxX + 100, boxY + 346);
-  line(boxX + 76, boxY + 326, boxX + 414, boxY + 326);
-  line(boxX + 76, boxY + 306, boxX + 414, boxY + 306);
-  line(boxX + 76, boxY + 286, boxX + 414, boxY + 286);
+  line(boxX + 76, boxY + 346, boxX + 190, boxY + 346);
+  line(boxX + 76, boxY + 326, boxX + 190, boxY + 326);
+  line(boxX + 76, boxY + 306, boxX + 190, boxY + 306);
+  line(boxX + 76, boxY + 286, boxX + 190, boxY + 286);
 }
 
 // function to generate a random box type (either blue or wood)
@@ -215,9 +215,9 @@ function fuel(fuelX, fuelY) {
 // function to generate new fuels at random y positions
 function generateNewFuel() {
   let newFuelX = width + gap; // initial X position of the new fuel
-  let newFuelY = random(100, height - 150); // random Y position within floor level and roof ish
+  let newFuelY = random(300, height - 110); // random Y position within floor level and roof ish
 
-  // stores the new fuel in array to later display on canvas, loops, fuel counter
+  // stores the new fuel object in array to later display on canvas, loops, fuel counter
   fuels.push({
     x: newFuelX,
     y: newFuelY,
@@ -265,7 +265,7 @@ function gameScreen1() {
   }
 
   // frequency of new boxes
-  if (frameCount % 100 === 0) {
+  if (frameCount % 60 === 0) {
     generateNewBox();
   }
 
@@ -314,7 +314,7 @@ function gameScreen1() {
   }*/
 
   // frequency of new fuel
-  if (frameCount % 80 === 0) {
+  if (frameCount % 70 === 0) {
     generateNewFuel();
   }
 
