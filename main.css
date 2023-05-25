@@ -49,3 +49,16 @@ body {
 .play-again-button:hover {
   color: red;
 }
+
+.try-again-button {
+  font-family: "Darumadrop One", cursive;
+  font-size: 40px;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.try-again-button:hover {
+  color: red;
+}

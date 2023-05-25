@@ -6,13 +6,7 @@ let button2;
 let mover;
 let characterSpeed = 5;
 let playAgainButton;
-
-// function preload() {
-//   img = loadImage("./Spacebak.png");
-//   img2 = loadImage("./space.jpg");
-//   img3 = loadImage("./gsmeover.jpg")
-//   img4 = loadImage("./won.jpg")
-// }
+let tryAgainButton;
 
 function setup() {
   createCanvas(1000, 650);
@@ -145,38 +139,40 @@ function draw() {
     } else {
       Win();
     }
-    // prova lägg collision här??
   } else if (state === "gameOver") {
+    for (let i = 0; i < boxes.length; i++) {
+      let currentBox = boxes[i];
+      gameScreen1();
+    }
     gameOver();
   }
-}
 
-// background and floor
-function scenery() {
-  background(110, 127, 128);
-  fill(192, 192, 192);
-  noStroke();
-  rect(0, 530, width, 400);
-}
-
-//function for window
-function windows(windowX, windowY, windowW, windowH) {
-  fill(0, 0, 0);
-  rect(windowX + 30, windowY + 40, windowW + 15, windowH - 25, 20);
-
-  // if window is between these x positions, draw pluto planet
-  if (windowX < 122 && windowX > 10) {
-    fill(200, 200, 200);
-    ellipse(157, 169, 25, 25);
-    fill(150, 150, 150);
-    ellipse(157, 163, 7, 7);
-    ellipse(152, 172, 6, 6);
-    ellipse(161, 176, 6, 6);
-    ellipse(160, 170, 4, 4);
+  // background and floor
+  function scenery() {
+    background(110, 127, 128);
+    fill(192, 192, 192);
+    noStroke();
+    rect(0, 530, width, 400);
   }
-}
 
-/*function drawBoxes() {
+  //function for window
+  function windows(windowX, windowY, windowW, windowH) {
+    fill(0, 0, 0);
+    rect(windowX + 30, windowY + 40, windowW + 15, windowH - 25, 20);
+
+    // if window is between these x positions, draw pluto planet
+    if (windowX < 122 && windowX > 10) {
+      fill(200, 200, 200);
+      ellipse(157, 169, 25, 25);
+      fill(150, 150, 150);
+      ellipse(157, 163, 7, 7);
+      ellipse(152, 172, 6, 6);
+      ellipse(161, 176, 6, 6);
+      ellipse(160, 170, 4, 4);
+    }
+  }
+
+  /*function drawBoxes() {
   for (let i = boxes.length - 1; i >= 0; i--) {
     let currentBox = boxes[i];
 
@@ -190,118 +186,118 @@ function windows(windowX, windowY, windowW, windowH) {
   }
 }*/
 
-// function for fuel
-function fuel(fuelX, fuelY) {
-  fill(255, 0, 0);
-  noStroke();
-  rect(fuelX, fuelY, 40, 40);
-  fill(110, 127, 128);
-  triangle(
-    fuelX + 20,
-    fuelY + 9,
-    fuelX + 34,
-    fuelY + 9,
-    fuelX + 34,
-    fuelY + 20
-  );
-  stroke(255, 255, 0);
-  strokeWeight(6);
-  line(fuelX - 11, fuelY - 12, fuelX, fuelY);
-  fill(0, 0, 0);
-  noStroke();
-  ellipse(fuelX + 2, fuelY + 2, 7, 5);
-}
+  // function for fuel
+  function fuel(fuelX, fuelY) {
+    fill(255, 0, 0);
+    noStroke();
+    rect(fuelX, fuelY, 40, 40);
+    fill(110, 127, 128);
+    triangle(
+      fuelX + 20,
+      fuelY + 9,
+      fuelX + 34,
+      fuelY + 9,
+      fuelX + 34,
+      fuelY + 20
+    );
+    stroke(255, 255, 0);
+    strokeWeight(6);
+    line(fuelX - 11, fuelY - 12, fuelX, fuelY);
+    fill(0, 0, 0);
+    noStroke();
+    ellipse(fuelX + 2, fuelY + 2, 7, 5);
+  }
 
-// function to generate new fuels at random y positions
-function generateNewFuel() {
-  let newFuelX = width + gap; // initial X position of the new fuel
-  let newFuelY = random(300, height - 110); // random Y position within floor level and roof ish
+  // function to generate new fuels at random y positions
+  function generateNewFuel() {
+    let newFuelX = width + gap; // initial X position of the new fuel
+    let newFuelY = random(300, height - 110); // random Y position within floor level and roof ish
 
-  // stores the new fuel object in array to later display on canvas, loops, fuel counter
-  fuels.push({
-    x: newFuelX,
-    y: newFuelY,
-  });
-}
+    // stores the new fuel object in array to later display on canvas, loops, fuel counter
+    fuels.push({
+      x: newFuelX,
+      y: newFuelY,
+    });
+  }
 
-// function to display new fuels on the canvas
-function drawFuels() {
-  // iterate over each fuel object
-  for (let i = fuels.length - 1; i >= 0; i--) {
-    let currentFuel = fuels[i]; // and assign currentfuel variable for readability and rendering
+  // function to display new fuels on the canvas
+  function drawFuels() {
+    // iterate over each fuel object
+    for (let i = fuels.length - 1; i >= 0; i--) {
+      let currentFuel = fuels[i]; // and assign currentfuel variable for readability and rendering
 
-    fuel(currentFuel.x, currentFuel.y); // new x and y values for the fuel
+      fuel(currentFuel.x, currentFuel.y); // new x and y values for the fuel
 
-    currentFuel.x -= moveToLeft2;
+      currentFuel.x -= moveToLeft2;
 
-    /* if (currentFuel.x + 40 + gap < 0) {
+      /* if (currentFuel.x + 40 + gap < 0) {
       fuels.splice(i, 1); // Remove the fuel from the array if it's out of the screen
     } */
-  }
-}
-
-//placeholder for among us character code
-
-// function for the game screen itself
-function gameScreen1() {
-  scenery();
-  windows(windowX, windowY, windowW, windowH);
-  windows(windowX + 300, windowY, windowW, windowH);
-
-  // move windows to the left
-  windowX -= moveToLeft;
-  // if right edge of window is in left of screen
-  if (windowX + windowW + gap < -320) {
-    // "reset" position to the right of screen
-    windowX = width + gap;
-  }
-
-  // move initial box x position to the left
-  boxX -= moveToLeft2;
-  // if right edge of box is in left of screen
-  if (boxX + boxW + gap < -320) {
-    // "reset" position to the right of screen
-    boxX = width + gap;
-  }
-
-  // frequency of new boxes
-  if (frameCount % 60 === 0) {
-    generateNewBox();
-  }
-
-  drawBoxes();
-
-  // Check for collision with boxes
-  for (let i = 0; i < boxes.length; i++) {
-    let currentBox = boxes[i];
-    // Box dimensions
-    let boxLeft = currentBox.x + 76;
-    let boxRight = currentBox.x + boxW + 15 + 76;
-    let boxTop = currentBox.y + 275;
-    let boxBottom = currentBox.y + boxH - 10 + 275;
-
-    // Character dimensions
-    let characterLeft = mover.pos.x - 20;
-    let characterRight = mover.pos.x + 20;
-    let characterTop = mover.pos.y - 50;
-    let characterBottom = mover.pos.y + 50;
-
-    console.log("charTop:", characterTop);
-    console.log("boxBottom:", boxBottom);
-    console.log("charBottom:", characterBottom);
-    console.log("boxTop:", boxTop);
-    // Check for collision with blue box
-    if (characterLeft < boxRight && characterRight > boxLeft) {
-      if (characterBottom > boxTop && characterTop < boxTop) {
-        // Collision with wooden box, call gameOver()
-        state = "gameOver";
-        gameOver();
-        return; // Exit the function to stop the game
-      }
     }
   }
 
-  /*for (let i = fuels.length - 1; i >= 0; i--) {
+  //placeholder for among us character code
+
+  // function for the game screen itself
+  function gameScreen1() {
+    scenery();
+    windows(windowX, windowY, windowW, windowH);
+    windows(windowX + 300, windowY, windowW, windowH);
+
+    // move windows to the left
+    windowX -= moveToLeft;
+    // if right edge of window is in left of screen
+    if (windowX + windowW + gap < -320) {
+      // "reset" position to the right of screen
+      windowX = width + gap;
+    }
+
+    // move initial box x position to the left
+    boxX -= moveToLeft2;
+    // if right edge of box is in left of screen
+    if (boxX + boxW + gap < -320) {
+      // "reset" position to the right of screen
+      boxX = width + gap;
+    }
+
+    // frequency of new boxes
+    if (frameCount % 60 === 0) {
+      generateNewBox();
+    }
+
+    drawBoxes();
+
+    // Check for collision with boxes
+    for (let i = 0; i < boxes.length; i++) {
+      let currentBox = boxes[i];
+      // Box dimensions
+      let boxLeft = currentBox.x + 76;
+      let boxRight = currentBox.x + boxW + 15 + 76;
+      let boxTop = currentBox.y + 275;
+      let boxBottom = currentBox.y + boxH - 10 + 275;
+
+      // Character dimensions
+      let characterLeft = mover.pos.x - 20;
+      let characterRight = mover.pos.x + 20;
+      let characterTop = mover.pos.y - 50;
+      let characterBottom = mover.pos.y + 50;
+
+      console.log("charTop:", characterTop);
+      console.log("boxBottom:", boxBottom);
+      console.log("charBottom:", characterBottom);
+      console.log("boxTop:", boxTop);
+      // Check for collision with blue box
+      if (characterLeft < boxRight && characterRight > boxLeft) {
+        if (characterBottom > boxTop && characterTop < boxTop) {
+          // Collision with wooden box, call gameOver()
+          state = "gameOver";
+          gameOver();
+          return; // Exit the function to stop the game
+        }
+      }
+    }
+
+    /*for (let i = fuels.length - 1; i >= 0; i--) {
     let currentFuel = fuels[i];
 
     fuel(currentFuel.x, currentFuel.y);
@@ -313,154 +309,159 @@ function gameScreen1() {
     }
   }*/
 
-  // frequency of new fuel
-  if (frameCount % 70 === 0) {
-    generateNewFuel();
+    // frequency of new fuel
+    if (frameCount % 70 === 0) {
+      generateNewFuel();
+    }
+
+    drawFuels();
+
+    // display among us character
+    mover.Show();
+
+    // code for collecting fuel
+    // loop to iterate through each fuel
+    for (let i = 0; i < fuels.length; i++) {
+      let currentFuel = fuels[i];
+
+      // character's dimensions
+      let characterLeft = mover.pos.x - 25;
+      let characterRight = mover.pos.x + 25;
+      let characterTop = mover.pos.y - 75;
+      let characterBottom = mover.pos.y + 75;
+
+      // fuel's dimensions
+      let fuelLeft = currentFuel.x;
+      let fuelRight = currentFuel.x + 40;
+      let fuelTop = currentFuel.y;
+      let fuelBottom = currentFuel.y + 40;
+
+      // check for collision
+      if (
+        characterLeft < fuelRight &&
+        characterRight > fuelLeft &&
+        characterTop < fuelBottom &&
+        characterBottom > fuelTop
+      ) {
+        // if they collide, increase the counter and remove one fuel at that index
+        fuelCounter++;
+        fuels.splice(i, 1);
+      }
+    }
+
+    fill(255);
+    textSize(20);
+    textAlign(RIGHT, TOP);
+    text("Fuel Counter: " + fuelCounter, width - 10, 10);
   }
 
-  drawFuels();
+  function drawStart() {
+    background(0);
+    image(img2, 1, 1, 1000, 750);
+    fill(254, 227, 132);
+    textSize(50);
+    textFont("Darumadrop One");
+    textAlign(CENTER, CENTER);
+    text("Are YOU Ready For A New Adventure?", 500, 120);
 
-  // display among us character
-  mover.Show();
+    if (button) {
+      button.show();
+    } else {
+      button = createButton("Start!");
+      button.position(1000, 550);
+      button.mousePressed(handleClick);
+      button.addClass("custom-button");
+    }
 
-  // code for collecting fuel
-  // loop to iterate through each fuel
-  for (let i = 0; i < fuels.length; i++) {
-    let currentFuel = fuels[i];
-
-    // character's dimensions
-    let characterLeft = mover.pos.x - 25;
-    let characterRight = mover.pos.x + 25;
-    let characterTop = mover.pos.y - 75;
-    let characterBottom = mover.pos.y + 75;
-
-    // fuel's dimensions
-    let fuelLeft = currentFuel.x;
-    let fuelRight = currentFuel.x + 40;
-    let fuelTop = currentFuel.y;
-    let fuelBottom = currentFuel.y + 40;
-
-    // check for collision
-    if (
-      characterLeft < fuelRight &&
-      characterRight > fuelLeft &&
-      characterTop < fuelBottom &&
-      characterBottom > fuelTop
-    ) {
-      // if they collide, increase the counter and remove one fuel at that index
-      fuelCounter++;
-      fuels.splice(i, 1);
+    if (button2) {
+      button2.hide();
     }
   }
 
-  fill(255);
-  textSize(20);
-  textAlign(RIGHT, TOP);
-  text("Fuel Counter: " + fuelCounter, width - 10, 10);
-}
+  function drawStartTwo() {
+    background(0);
+    image(img, 0, 50, 1000, 575);
+    fill(210, 43, 43);
+    textSize(150);
+    textFont("Darumadrop One");
+    text("URGENT!", 320, 190);
+    textSize(23);
+    textFont("Darumadrop One");
+    stroke(0, 0, 0);
+    fill(255, 255, 255);
+    strokeWeight(4);
+    text("NMD is stuck on the wrong spaceship full of impostors.", 390, 420);
+    text(
+      "Help NMD escape by collecting 15 fuels and fly away in the JTH spaceship!",
+      450,
+      453
+    );
+    text(
+      "But be careful, the impostors are chasing you, and if you stumble on the boxes, they'll catch you!",
+      500,
+      485
+    );
 
-function drawStart() {
-  background(0);
-  image(img2, 1, 1, 1000, 750);
-  fill(254, 227, 132);
-  textSize(50);
-  textFont("Darumadrop One");
-  textAlign(CENTER, CENTER);
-  text("Are YOU Ready For A New Adventure?", 500, 120);
+    if (button2) {
+      button2.show();
+    } else {
+      button2 = createButton("GO");
+      button2.position(1000, 600);
+      button2.addClass("button2");
+      button2.mousePressed(handleClickButton2);
+    }
 
-  if (button) {
-    button.show();
-  } else {
-    button = createButton("Start!");
-    button.position(1000, 550);
-    button.mousePressed(handleClick);
-    button.addClass("custom-button");
+    if (button) {
+      button.hide();
+    }
   }
 
-  if (button2) {
-    button2.hide();
-  }
-}
-
-function drawStartTwo() {
-  background(0);
-  image(img, 0, 50, 1000, 575);
-  fill(210, 43, 43);
-  textSize(150);
-  textFont("Darumadrop One");
-  text("URGENT!", 320, 190);
-  textSize(23);
-  textFont("Darumadrop One");
-  stroke(0, 0, 0);
-  fill(255, 255, 255);
-  strokeWeight(4);
-  text("NMD is stuck on the wrong spaceship full of impostors.", 390, 420);
-  text(
-    "Help NMD escape by collecting 15 fuels and fly away in the JTH spaceship!",
-    450,
-    453
-  );
-  text(
-    "But be careful, the impostors are chasing you, and if you stumble on the boxes, they'll catch you!",
-    500,
-    485
-  );
-
-  if (button2) {
-    button2.show();
-  } else {
-    button2 = createButton("GO");
-    button2.position(1000, 600);
-    button2.addClass("button2");
-    button2.mousePressed(handleClickButton2);
+  // Function to handle button click event
+  function handleClick() {
+    if (state === "start") {
+      state = "secondStart";
+    }
   }
 
-  if (button) {
-    button.hide();
-  }
-}
+  function handleClickButton2() {
+    if (state === "secondStart") {
+      state = "gameScreen";
+      gameScreen1();
+    }
 
-// Function to handle button click event
-function handleClick() {
-  if (state === "start") {
-    state = "secondStart";
+    if (button2) {
+      button2.hide();
+    }
   }
-}
+  function gameOver() {
+    background(0);
+    image(img3, 0, 50, 1000, 575);
 
-function handleClickButton2() {
-  if (state === "secondStart") {
-    state = "gameScreen";
-    gameScreen1();
+    if (tryAgainButton) {
+      tryAgainButton.show();
+    } else {
+      tryAgainButton = createButton("Try again!");
+      tryAgainButton.position(750, 630);
+      tryAgainButton.addClass("try-again-button");
+      tryAgainButton.mousePressed(handleClickPlayAgain);
+    }
   }
+  function Win() {
+    background(0);
+    image(img4, 0, 50, 1000, 575);
+    fill(230, 230, 230);
+    textSize(40);
+    textFont("Darumadrop One");
+    // text("Play again!", 780, 600);
 
-  if (button2) {
-    button2.hide();
-  }
-}
-function gameOver() {
-  background(0);
-  image(img3, 0, 50, 1000, 575);
-  fill(230, 230, 230);
-  textSize(40);
-  textFont("Darumadrop One");
-  text("Try again!", 780, 600);
-  textSize(23);
-}
-function Win() {
-  background(0);
-  image(img4, 0, 50, 1000, 575);
-  fill(230, 230, 230);
-  textSize(40);
-  textFont("Darumadrop One");
-  // text("Play again!", 780, 600);
-
-  if (playAgainButton) {
-    playAgainButton.show();
-  } else {
-    playAgainButton = createButton("Play again!");
-    playAgainButton.position(350, 350);
-    playAgainButton.addClass("play-again-button");
-    playAgainButton.mousePressed(handleClickPlayAgain);
+    if (playAgainButton) {
+      playAgainButton.show();
+    } else {
+      playAgainButton = createButton("Play again!");
+      playAgainButton.position(350, 350);
+      playAgainButton.addClass("play-again-button");
+      playAgainButton.mousePressed(handleClickPlayAgain);
+    }
   }
 
   function handleClickPlayAgain() {
@@ -483,6 +484,7 @@ function Win() {
     fuels = [];
 
     // Hide the play again button
+    tryAgainButton.hide();
     playAgainButton.hide();
 
     // Show the initial start screen
