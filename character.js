@@ -67,8 +67,9 @@ class Mover {
   }
 
   Show() {
+    // if arrow right is pressed, x position is added and backpack and goggle is updated accordingly
     if (keyIsPressed && key === "ArrowRight") {
-      this.pos.x -= -5;
+      this.pos.x += 5;
       backPackX = this.pos.x - 26;
       goggleX = this.pos.x + 7;
     } else if (keyIsPressed && key === "ArrowLeft") {
@@ -79,14 +80,14 @@ class Mover {
 
     // Uses spacebar to jump
     if (keyIsDown(32)) {
-      this.vel = -10; //jump value
+      this.vel = -10; //negative value to move upwards/jump
       this.pos.y = this.pos.y + this.vel;
     }
 
     // makes the character stop at the floor, y - level
     if (this.pos.y > 510) {
       this.pos.y = 510;
-      this.vel = 0;
+      this.vel = 0; // stop velocity
     } else {
       this.pos.y = this.pos.y + this.vel;
       this.vel = this.vel + this.acc;

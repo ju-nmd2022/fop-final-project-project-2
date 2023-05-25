@@ -1,10 +1,7 @@
-let img;
-let img2;
 let state = "start";
 let button;
 let button2;
 let mover;
-let characterSpeed = 5;
 let playAgainButton;
 let tryAgainButton;
 
@@ -39,94 +36,15 @@ let boxW = 100;
 let boxH = 100;
 let boxes = [];
 
-// function for blue box
-function blueBox(boxX, boxY, boxW, boxH) {
-  //blue box
-  fill(84, 196, 198);
-  strokeWeight(4);
-  stroke(99, 148, 147);
-  rect(boxX + 76, boxY + 276, boxW + 15, boxH - 10, 5);
-  stroke(150, 150, 150);
-  strokeWeight(2.5);
-  line(boxX + 80, boxY + 308, boxX + 99, boxY + 308);
-  line(boxX + 99, boxY + 308, boxX + 116, boxY + 322);
-  line(boxX + 116, boxY + 322, boxX + 150, boxY + 322);
-  line(boxX + 150, boxY + 322, boxX + 166, boxY + 308);
-  line(boxX + 166, boxY + 308, boxX + 187, boxY + 308);
-}
-
-// function for wooden box
-function woodenBox(boxX, boxY, boxW, boxH) {
-  //wooden box
-  fill(202, 164, 114);
-  strokeWeight(4);
-  stroke(141, 114, 79);
-  rect(boxX + 76, boxY + 276, boxW + 15, boxH - 10, 5);
-  fill(110, 110, 110);
-  // nails
-  noStroke();
-  ellipse(boxX + 85, boxY + 295, boxW - 92, boxH - 92);
-  ellipse(boxX + 182, boxY + 295, boxW - 92, boxH - 92);
-  ellipse(boxX + 85, boxY + 315, boxW - 92, boxH - 92);
-  ellipse(boxX + 182, boxY + 315, boxW - 92, boxH - 92);
-  ellipse(boxX + 85, boxY + 335, boxW - 92, boxH - 92);
-  ellipse(boxX + 182, boxY + 335, boxW - 92, boxH - 92);
-  ellipse(boxX + 85, boxY + 355, boxW - 92, boxH - 92);
-  ellipse(boxX + 182, boxY + 355, boxW - 92, boxH - 92);
-  // wood lines
-  stroke(106, 81, 50);
-  strokeWeight(2.5);
-  line(boxX + 76, boxY + 346, boxX + 190, boxY + 346);
-  line(boxX + 76, boxY + 326, boxX + 190, boxY + 326);
-  line(boxX + 76, boxY + 306, boxX + 190, boxY + 306);
-  line(boxX + 76, boxY + 286, boxX + 190, boxY + 286);
-}
-
-// function to generate a random box type (either blue or wood)
-function generateRandomBoxType() {
-  // Generate a random whole number (0 or 1) to determine the box type
-  return floor(random(2));
-}
-
-// function to generate new boxes in random orders
-function generateNewBox() {
-  let newBoxType = generateRandomBoxType();
-  let newBoxX = width + gap; // initial X position of the new box
-  let newBoxY = boxY; // always same Y position
-
-  // stores the new box in array to later display boxes on canvas, loops, store info
-  boxes.push({
-    type: newBoxType,
-    x: newBoxX,
-    y: newBoxY,
-  });
-}
-
-// function to display new boxes on the canvas
-// the following 3 lines of code have been adapted from https://www.w3docs.com/snippets/javascript/how-to-loop-through-array-and-remove-items-without-breaking-the-for-loop.html
-function drawBoxes() {
-  // iterate over each box object
-  for (let i = boxes.length - 1; i >= 0; i--) {
-    let currentBox = boxes[i]; // and assign currentbox variable for readability and rendering
-
-    if (currentBox.type === 0) {
-      blueBox(currentBox.x, currentBox.y, boxW, boxH);
-    } else {
-      woodenBox(currentBox.x, currentBox.y, boxW, boxH);
-    }
-
-    currentBox.x -= moveToLeft2;
-  }
-}
-
+// states
 function draw() {
   if (state === "start") {
     drawStart();
   } else if (state === "secondStart") {
     drawStartTwo();
   } else if (state === "gameScreen") {
-    if (fuelCounter < 5) {
-      gameScreen1();
+    if (fuelCounter < 10) {
+      gameScreen();
     } else {
       Win();
     }
@@ -158,6 +76,87 @@ function draw() {
       ellipse(160, 170, 4, 4);
     }
   }
+
+  // function for blue box
+  function blueBox(boxX, boxY, boxW, boxH) {
+    //blue box
+    fill(84, 196, 198);
+    strokeWeight(4);
+    stroke(99, 148, 147);
+    rect(boxX + 76, boxY + 276, boxW + 15, boxH - 10, 5);
+    stroke(150, 150, 150);
+    strokeWeight(2.5);
+    line(boxX + 80, boxY + 308, boxX + 99, boxY + 308);
+    line(boxX + 99, boxY + 308, boxX + 116, boxY + 322);
+    line(boxX + 116, boxY + 322, boxX + 150, boxY + 322);
+    line(boxX + 150, boxY + 322, boxX + 166, boxY + 308);
+    line(boxX + 166, boxY + 308, boxX + 187, boxY + 308);
+  }
+
+  // function for wooden box
+  function woodenBox(boxX, boxY, boxW, boxH) {
+    //wooden box
+    fill(202, 164, 114);
+    strokeWeight(4);
+    stroke(141, 114, 79);
+    rect(boxX + 76, boxY + 276, boxW + 15, boxH - 10, 5);
+    fill(110, 110, 110);
+    // nails
+    noStroke();
+    ellipse(boxX + 85, boxY + 295, boxW - 92, boxH - 92);
+    ellipse(boxX + 182, boxY + 295, boxW - 92, boxH - 92);
+    ellipse(boxX + 85, boxY + 315, boxW - 92, boxH - 92);
+    ellipse(boxX + 182, boxY + 315, boxW - 92, boxH - 92);
+    ellipse(boxX + 85, boxY + 335, boxW - 92, boxH - 92);
+    ellipse(boxX + 182, boxY + 335, boxW - 92, boxH - 92);
+    ellipse(boxX + 85, boxY + 355, boxW - 92, boxH - 92);
+    ellipse(boxX + 182, boxY + 355, boxW - 92, boxH - 92);
+    // wood lines
+    stroke(106, 81, 50);
+    strokeWeight(2.5);
+    line(boxX + 76, boxY + 346, boxX + 190, boxY + 346);
+    line(boxX + 76, boxY + 326, boxX + 190, boxY + 326);
+    line(boxX + 76, boxY + 306, boxX + 190, boxY + 306);
+    line(boxX + 76, boxY + 286, boxX + 190, boxY + 286);
+  }
+
+  // function to generate a random box type (either blue or wood)
+  function generateRandomBoxType() {
+    // Generate a random whole number (0 or 1) to determine the box type
+    return floor(random(2));
+  }
+
+  // function to generate new boxes in random orders
+  function generateNewBox() {
+    let newBoxType = generateRandomBoxType();
+    let newBoxX = width; // initial X position of the new box
+    let newBoxY = boxY; // always same Y position
+
+    // stores the new box in array to later display boxes on canvas, loops, store info
+    boxes.push({
+      type: newBoxType,
+      x: newBoxX,
+      y: newBoxY,
+    });
+  }
+
+  // function to display new boxes on the canvas
+  // the following 3 lines of code have been adapted from https://www.w3docs.com/snippets/javascript/how-to-loop-through-array-and-remove-items-without-breaking-the-for-loop.html
+  function drawBoxes() {
+    // iterate over each box object
+    for (let i = boxes.length - 1; i >= 0; i--) {
+      let currentBox = boxes[i]; // and assign currentbox variable for readability and rendering
+
+      if (currentBox.type === 0) {
+        blueBox(currentBox.x, currentBox.y, boxW, boxH);
+      } else {
+        woodenBox(currentBox.x, currentBox.y, boxW, boxH);
+      }
+
+      currentBox.x -= moveToLeft2;
+    }
+  }
+
   // function for fuel
   function fuel(fuelX, fuelY) {
     fill(255, 0, 0);
@@ -182,7 +181,7 @@ function draw() {
 
   // function to generate new fuels at random y positions
   function generateNewFuel() {
-    let newFuelX = width + gap; // initial X position of the new fuel
+    let newFuelX = width; // initial X position of the new fuel
     let newFuelY = random(300, height - 110); // random Y position within floor level and roof ish
 
     // stores the new fuel object in array to later display on canvas, loops, fuel counter
@@ -205,25 +204,25 @@ function draw() {
   }
 
   // function for the game screen itself
-  function gameScreen1() {
+  function gameScreen() {
     scenery();
     windows(windowX, windowY, windowW, windowH);
     windows(windowX + 300, windowY, windowW, windowH);
 
     // move windows to the left
     windowX -= moveToLeft;
-    // if right edge of window is in left of screen
+    // if right edge of window (and gap for smooth transition) is in left of screen
     if (windowX + windowW + gap < -320) {
       // "reset" position to the right of screen
-      windowX = width + gap;
+      windowX = width;
     }
 
     // move initial box x position to the left
     boxX -= moveToLeft2;
     // if right edge of box is in left of screen
-    if (boxX + boxW + gap < -320) {
+    if (boxX + boxW < -320) {
       // "reset" position to the right of screen
-      boxX = width + gap;
+      boxX = width;
     }
 
     // frequency of new boxes
@@ -234,13 +233,13 @@ function draw() {
     drawBoxes();
 
     // Check for collision with boxes
+    // for loop to iterate over each box object
     for (let i = 0; i < boxes.length; i++) {
       let currentBox = boxes[i];
       // Box dimensions
       let boxLeft = currentBox.x + 76;
       let boxRight = currentBox.x + boxW + 15 + 76;
       let boxTop = currentBox.y + 275;
-      let boxBottom = currentBox.y + boxH - 10 + 275;
 
       // Character dimensions
       let characterLeft = mover.pos.x - 20;
@@ -248,14 +247,12 @@ function draw() {
       let characterTop = mover.pos.y - 50;
       let characterBottom = mover.pos.y + 50;
 
-      console.log("charTop:", characterTop);
-      console.log("boxBottom:", boxBottom);
-      console.log("charBottom:", characterBottom);
-      console.log("boxTop:", boxTop);
       // Check for collision with blue box
+      // if character's left edge is to the left of the box's right edge and if character's right edge is to the right of the box's left edge
       if (characterLeft < boxRight && characterRight > boxLeft) {
+        // if character's bottom edge is below the box's top edge and if the character's top edge is above the box's bottom edge
         if (characterBottom > boxTop && characterTop < boxTop) {
-          // Collision with wooden box, call gameOver()
+          // collision detected, call gameOver()
           state = "gameOver";
           gameOver();
           return; // Exit the function to stop the game
@@ -273,7 +270,7 @@ function draw() {
     mover.Show();
 
     // code for collecting fuel
-    // loop to iterate through each fuel
+    // loop to iterate over each fuel object
     for (let i = 0; i < fuels.length; i++) {
       let currentFuel = fuels[i];
 
@@ -296,7 +293,7 @@ function draw() {
         characterTop < fuelBottom &&
         characterBottom > fuelTop
       ) {
-        // if they collide, increase the counter and remove one fuel at that index
+        // if they collide, fuelCounter is incremented by 1 and the fuel is removed from array
         fuelCounter++;
         fuels.splice(i, 1);
       }
@@ -317,11 +314,13 @@ function draw() {
     textAlign(CENTER, CENTER);
     text("Are YOU Ready For A New Adventure?", 500, 120);
 
+    //if button should exist, display it, otherwise create it
     if (button) {
       button.show();
     } else {
       button = createButton("Start!");
       button.position(1000, 550);
+      // when button is clicked, call handeClick() function
       button.mousePressed(handleClick);
       button.addClass("custom-button");
     }
@@ -359,12 +358,14 @@ function draw() {
       485
     );
 
+    //if button2 should exist, display it, otherwise create it
     if (button2) {
       button2.show();
     } else {
       button2 = createButton("GO");
       button2.position(1000, 600);
       button2.addClass("button2");
+      // when button is clicked, call handeClickButton2() function
       button2.mousePressed(handleClickButton2);
     }
 
@@ -373,48 +374,57 @@ function draw() {
     }
   }
 
-  // Function to handle button click event
+  // Function to handle button click event for start screen
   function handleClick() {
     if (state === "start") {
       state = "secondStart";
     }
   }
 
+  // Function to handle button click event for second start screen
   function handleClickButton2() {
     if (state === "secondStart") {
       state = "gameScreen";
-      gameScreen1();
     }
 
     if (button2) {
       button2.hide();
     }
   }
+
+  //function for game over
   function gameOver() {
     background(0);
     image(img3, 0, 50, 1000, 575);
 
+    //if tryAgainButton should exist, display it, otherwise create it
     if (tryAgainButton) {
       tryAgainButton.show();
     } else {
       tryAgainButton = createButton("Try again!");
       tryAgainButton.position(750, 630);
       tryAgainButton.addClass("try-again-button");
+      // when button is clicked, call handeClickPlayAgain() function
       tryAgainButton.mousePressed(handleClickPlayAgain);
     }
   }
+
+  //function for winning
   function Win() {
     background(0);
     image(img4, 0, 50, 1000, 575);
     fill(230, 230, 230);
     textSize(40);
     textFont("Darumadrop One");
+
+    //if playAgainButton should exist, display it, otherwise create it
     if (playAgainButton) {
       playAgainButton.show();
     } else {
       playAgainButton = createButton("Play again!");
       playAgainButton.position(350, 350);
       playAgainButton.addClass("play-again-button");
+      // when button is clicked, call handeClickPlayAgain() function
       playAgainButton.mousePressed(handleClickPlayAgain);
     }
   }
@@ -434,7 +444,7 @@ function draw() {
     Rinvy = 41;
     Linvy = 41;
     bodyY = 65;
-    boxX = 100;
+    //boxX = 100;
     boxes = [];
     fuels = [];
 
