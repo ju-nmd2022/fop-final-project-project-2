@@ -61,8 +61,11 @@ class Mover {
   // create and initialize object instance
   constructor(x, y) {
     this.pos = createVector(x, y);
-    this.vel = 1;
-    this.acc = 1;
+    this.vel = 0;
+    this.acc = 4;
+    backPackX = this.pos.x - 26;
+    goggleX = this.pos.x + 7;
+    // these are here so the googles and backpack are visble from the begining
   }
 
   Show() {
@@ -78,25 +81,18 @@ class Mover {
 
     // Uses spacebar to jump
     if (keyIsDown(32)) {
-      this.vel = -10;
+      this.vel = -3; //jump value
       this.pos.y = this.pos.y + this.vel;
-      // this.pos.y = this.pos.y + this.vel;
     }
 
     // makes the character stop at the floor
-    if (this.pos.y > 515) {
-      this.pos.y = 515;
+    if (this.pos.y > 510) {
+      this.pos.y = 510;
       this.vel = 0;
     } else {
       this.pos.y = this.pos.y + this.vel;
       this.vel = this.vel + this.acc;
     }
-
-    /*    // Makes it stop at the bottom line
-    if (this.pos.y + 300 < innerHeight) {
-      this.pos.y = this.pos.y + this.vel;
-      this.vel = this.vel + this.acc;
-    }*/
 
     fill(0);
     strokeWeight(3);
